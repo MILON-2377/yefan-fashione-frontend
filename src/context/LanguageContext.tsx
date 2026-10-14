@@ -9,10 +9,32 @@ interface LanguageContextType {
   dict: ReturnType<typeof getDictionary>;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined,
+);
+
+const LOCAL_STORAGE_KEY = "yifan_preferred_language";
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
+  // Use lazy initial state initializer to read localStorage once on mount without useEffect
+  const [language, setLanguageState] = useState<Language>(() => {
+    if (typeof window !== "undefined") {
+      const savedLang = localStorage.getItem(LOCAL_STORAGE_KEY) as Language;
+      if (savedLang === "en" || savedLang === "zh") {
+        return savedLang;
+      }
+    }
+    return "en";
+  });
+
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(LOCAL_STORAGE_KEY, lang);
+      document.cookie = `NEXT_LOCALE=${lang}; path=/; max-age=31536000`;
+    }
+  };
+
   const dict = getDictionary(language);
 
   return (

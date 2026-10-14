@@ -61,7 +61,6 @@ export interface Product {
 
 
 
-// --- Product Query Parameters for FastAPI Pagination & Filtering ---
 export interface ProductQueryParams {
   page?: number;
   limit?: number;

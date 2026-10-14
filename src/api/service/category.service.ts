@@ -1,5 +1,5 @@
-import { apiFetch } from "../client";
 import { NavCategory } from "@/types";
+import { baseFetch } from "../baseClient";
 
 // Fallback category dataset for apparel boutique
 const FALLBACK_CATEGORIES: NavCategory[] = [
@@ -36,7 +36,7 @@ const FALLBACK_CATEGORIES: NavCategory[] = [
 export const categoryService = {
     async getCategories(): Promise<NavCategory[]> {
         try {
-            const data = await apiFetch<NavCategory[]>("/categories");
+            const data = await baseFetch<NavCategory[]>("/categories");
             return data && data.length > 0 ? data : FALLBACK_CATEGORIES;
         } catch {
             return FALLBACK_CATEGORIES;
