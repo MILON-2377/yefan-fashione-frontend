@@ -7,7 +7,7 @@ export async function updateProduct(
     data: UpdateProductPayload
 ): Promise<Product> {
     const result = await adminFetch<ProductApiResponse<Product>>(`/products/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         body: JSON.stringify(data),
     });
 

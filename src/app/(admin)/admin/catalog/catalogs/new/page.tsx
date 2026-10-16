@@ -22,7 +22,7 @@ export default function CreateCatalogPage() {
   const createCatalogMutation = useCreateCatalog();
 
   const methods = useForm<CreateCatalogFormValues>({
-    resolver: zodResolver(createCatalogSchema),
+    resolver: zodResolver(createCatalogSchema) as any,
     defaultValues: {
       title: "",
       description: "",
@@ -74,7 +74,7 @@ export default function CreateCatalogPage() {
       },
       {
         onSuccess: () => {
-          router.push("/admin/catalogs");
+          router.push("/admin/catalog/catalogs");
         },
         onError: (err) => {
           setActiveError(

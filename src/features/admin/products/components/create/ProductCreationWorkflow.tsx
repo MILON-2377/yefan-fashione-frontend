@@ -51,7 +51,6 @@ export function ProductCreationWorkflow() {
   >({
     resolver: zodResolver(createProductSchema),
     defaultValues: {
-      brand_id: "",
       collection_id: "",
       category_id: "",
       product_code: "",
@@ -111,7 +110,6 @@ export function ProductCreationWorkflow() {
     switch (tab) {
       case "basic":
         return [
-          errors.brand_id,
           errors.collection_id,
           errors.category_id,
           errors.product_code,

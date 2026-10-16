@@ -6,7 +6,6 @@ export interface Collection {
     name: string;
     slug: string;
     description?: string;
-    cover_media_url?: string;
     status: RecordStatus;
     created_at: string;
     updated_at: string;
@@ -25,4 +24,12 @@ export interface GetCollectionsParams {
     status?: string;
     page?: number;
     page_size?: number;
+}
+
+
+export interface UnusedCollectionsResponse {
+  items: Collection[];
+  total: number;
+  page: number;
+  page_size: number;
 }

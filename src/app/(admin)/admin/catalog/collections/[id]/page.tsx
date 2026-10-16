@@ -42,7 +42,6 @@ export default function EditCollectionPage({
         name: collection.name,
         brand_id: collection.brand_id,
         description: collection.description,
-        cover_media_url: collection.cover_media_url,
         status: collection.status,
       }}
     />

@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { getCollections } from "../api/getCollections";
 import { CollectionListResponse, GetCollectionsParams } from "../types";
+import { collectionKeys } from "./keys";
 
-export const COLLECTIONS_QUERY_KEY = ["collections"] as const;
 
 export function useCollections(params?: GetCollectionsParams) {
     return useQuery<CollectionListResponse, Error>({
-        queryKey: [...COLLECTIONS_QUERY_KEY, params],
+        queryKey: collectionKeys.list(params),
         queryFn: () => getCollections(params),
     });
 }

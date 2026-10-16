@@ -18,7 +18,7 @@ export function DesktopNav({ categories = [] }: DesktopNavProps) {
     >
       <Link
         href="/"
-        className="text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium text-xs tracking-wide uppercase px-3 py-2 rounded-md transition-colors"
+        className="rounded-md px-3 py-2 text-xs font-medium uppercase tracking-wide text-[#51463B] transition-colors hover:bg-[#F0ECE6] hover:text-[#211F1C]"
       >
         {mainNavLinks[0]?.title ?? "Home"}
       </Link>
@@ -29,7 +29,7 @@ export function DesktopNav({ categories = [] }: DesktopNavProps) {
         <Link
           key={link.href}
           href={link.href}
-          className="text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium text-xs tracking-wide uppercase px-3 py-2 rounded-md transition-colors"
+          className="rounded-md px-3 py-2 text-xs font-medium uppercase tracking-wide text-[#51463B] transition-colors hover:bg-[#F0ECE6] hover:text-[#211F1C]"
         >
           {link.title}
         </Link>

@@ -1,19 +1,20 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Star,
-  Quote,
+  ArrowRight,
   Building2,
-  Globe,
-  Sparkles,
+  Globe2,
   PackageCheck,
+  Quote,
+  Sparkles,
+  Star,
 } from "lucide-react";
-import { useHomeReviews } from "../reviews/hooks/useHomeReviews";
+import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { useHomeReviews } from "../reviews/hooks/useHomeReviews";
 
 export function ClientReviewsSection() {
   const { dict } = useLanguage();
@@ -23,173 +24,243 @@ export function ClientReviewsSection() {
     page: 1,
     page_size: 10,
   });
+
   const reviews = data?.items ?? [];
   const [isHovered, setIsHovered] = useState(false);
 
   const marqueeItems = [...reviews, ...reviews, ...reviews, ...reviews];
 
   return (
-    <section className="w-full bg-white text-slate-800 py-16 sm:py-24 border-t border-slate-100 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        {/* --- Header Section --- */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-100 pb-8">
-          <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>{content.badge}</span>
+    <section className="relative w-full overflow-hidden border-t border-[#E7E1D9] bg-[#FAF8F4] py-20 text-[#211F1C] sm:py-24 lg:py-32">
+      <div className="pointer-events-none absolute -right-32 top-0 h-96 w-96 rounded-full bg-[#E9E0D5]/40 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-32 -left-24 h-96 w-96 rounded-full bg-white/80 blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl space-y-12 px-4 sm:px-8 lg:space-y-16">
+        {/* Editorial heading */}
+        <div className="flex flex-col gap-8 border-b border-[#D8C9B8] pb-8 md:flex-row md:items-end md:justify-between lg:pb-10">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl"
+          >
+            <div className="mb-5 flex items-center gap-3">
+              <span className="h-px w-8 bg-[#9D8974]" />
+              <Sparkles
+                className="h-3.5 w-3.5 text-[#9D8974]"
+                strokeWidth={1.5}
+              />
+              <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#806B55] sm:text-xs">
+                {content.badge}
+              </span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="font-serif text-3xl font-normal leading-tight tracking-tight text-[#211F1C] sm:text-4xl lg:text-5xl xl:text-6xl">
               {content.heading}
             </h2>
 
-            <p className="text-sm text-slate-500 leading-relaxed">
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-[#625D57] sm:text-base sm:leading-8">
               {content.subheading}
             </p>
-          </div>
+          </motion.div>
 
-          {/* Score Badge */}
-          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex items-center gap-4 shrink-0">
-            <div className="text-center pr-4 border-r border-slate-200">
-              <span className="text-3xl font-black text-slate-900 leading-none block">
+          {/* Rating summary */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="flex shrink-0 items-center gap-5 border border-[#D8C9B8] bg-white/70 p-5 sm:p-6"
+          >
+            <div className="border-r border-[#E7E1D9] pr-5">
+              <span className="block font-serif text-4xl font-normal leading-none text-[#51463B] sm:text-5xl">
                 4.9
               </span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-1 block">
+              <span className="mt-2 block text-[9px] font-medium uppercase tracking-[0.18em] text-[#806B55]">
                 {content.scoreOutOf}
               </span>
             </div>
 
-            <div className="space-y-1">
-              <div className="flex items-center gap-1 text-amber-400">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" />
+            <div>
+              <div
+                className="mb-2 flex items-center gap-1 text-[#9D8974]"
+                aria-label="5 out of 5 stars"
+              >
+                {Array.from({ length: 5 }, (_, index) => (
+                  <Star key={index} className="h-3.5 w-3.5 fill-current" />
                 ))}
               </div>
-              <span className="text-xs font-semibold text-slate-600 block">
+              <p className="max-w-36 text-xs leading-5 text-[#625D57]">
                 {content.satisfiedPartners}
-              </span>
+              </p>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        {/* --- Framer Motion Smooth Auto Marquee --- */}
+        {/* Review cards */}
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((n) => (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3].map((item) => (
               <div
-                key={n}
-                className="bg-slate-50 border border-slate-200/80 rounded-2xl p-6 h-56 animate-pulse"
-              />
+                key={item}
+                className="min-h-70 animate-pulse border border-[#E7E1D9] bg-white/70 p-7"
+              >
+                <div className="h-4 w-24 bg-[#E9E0D5]" />
+                <div className="mt-8 h-3 w-full bg-[#F0ECE6]" />
+                <div className="mt-3 h-3 w-5/6 bg-[#F0ECE6]" />
+                <div className="mt-3 h-3 w-2/3 bg-[#F0ECE6]" />
+                <div className="mt-12 border-t border-[#E7E1D9] pt-5">
+                  <div className="h-9 w-36 bg-[#F0ECE6]" />
+                </div>
+              </div>
             ))}
           </div>
         ) : isError || reviews.length === 0 ? (
-          <div className="py-12 text-center text-xs text-slate-500 font-mono">
-            {content.noReviews}
+          <div className="border border-dashed border-[#D8C9B8] px-6 py-16 text-center">
+            <Quote className="mx-auto mb-4 h-7 w-7 text-[#B9A995]" />
+            <p className="font-serif text-xl text-[#51463B]">
+              {content.noReviews}
+            </p>
           </div>
         ) : (
           <div
-            className="relative w-full overflow-hidden"
+            className="relative -mx-4 overflow-hidden sm:-mx-8"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            {/* Fade Overlays on Edges */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-20 bg-linear-to-r from-white to-transparent z-10" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-20 bg-linear-to-l from-white to-transparent z-10" />
+            {/* Edge fades */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8  bg-linear-to-r from-[#FAF8F4] to-transparent sm:w-16 lg:w-24" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-linear-to-l from-[#FAF8F4] to-transparent sm:w-16 lg:w-24" />
 
-            {/* Framer Motion Track */}
             <motion.div
-              className="flex gap-6 w-max py-2"
-              animate={{ x: isHovered ? undefined : ["0%", "-50%"] }}
+              className="flex w-max gap-4 px-4 py-3 sm:gap-5 sm:px-8"
+              animate={{
+                x: isHovered ? undefined : ["0%", "-50%"],
+              }}
               transition={{
                 ease: "linear",
-                duration: Math.max(25, reviews.length * 6),
+                duration: Math.max(30, reviews.length * 7),
                 repeat: Infinity,
                 repeatType: "loop",
               }}
             >
-              {marqueeItems.map((review, idx) => (
-                <div
-                  key={`${review.id}-${idx}`}
-                  className="
-                    w-75 sm:w-95 lg:w-105
-                    bg-white border border-slate-200/90 rounded-2xl p-6
-                    shadow-xs hover:shadow-md hover:border-blue-300
-                    transition-all flex flex-col justify-between shrink-0 relative space-y-4
-                  "
+              {marqueeItems.map((review, index) => (
+                <article
+                  key={`${review.id}-${index}`}
+                  className="group relative flex w-72.5 shrink-0 flex-col justify-between border border-[#E7E1D9] bg-white/85 p-6 transition-all duration-300 hover:border-[#D8C9B8] hover:bg-white sm:w-87.5 sm:p-7 lg:w-95"
                 >
-                  <Quote className="absolute top-6 right-6 w-8 h-8 text-slate-100 z-0" />
+                  <Quote className="absolute right-6 top-6 h-9 w-9 text-[#F0ECE6]" />
 
-                  <div className="space-y-3 relative z-10">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1 text-amber-400">
-                        {[...Array(review.rating || 5)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                        ))}
+                  <div className="relative">
+                    <div className="mb-6 flex items-center justify-between gap-3">
+                      <div
+                        className="flex items-center gap-1 text-[#9D8974]"
+                        aria-label={`${review.rating || 5} out of 5 stars`}
+                      >
+                        {Array.from(
+                          {
+                            length: Math.min(
+                              5,
+                              Math.max(0, review.rating || 5),
+                            ),
+                          },
+                          (_, starIndex) => (
+                            <Star
+                              key={starIndex}
+                              className="h-3.5 w-3.5 fill-current"
+                            />
+                          ),
+                        )}
                       </div>
 
                       {review.country && (
-                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
-                          <Globe className="w-3 h-3 text-slate-400" />
-                          {review.country}
+                        <span className="inline-flex max-w-36 items-center gap-1.5 text-[10px] uppercase tracking-[0.08em] text-[#806B55]">
+                          <Globe2 className="h-3 w-3 shrink-0" />
+                          <span className="truncate">{review.country}</span>
                         </span>
                       )}
                     </div>
 
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed italic line-clamp-4">
-                      {review.message}
+                    <p className="line-clamp-5 text-sm italic leading-7 text-[#625D57]">
+                      “{review.message}”
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-100 space-y-2 relative z-10">
+                  <div className="mt-8 border-t border-[#E7E1D9] pt-5">
                     <div className="flex items-center gap-3">
                       {review.avatar?.url ? (
-                        <div className="relative w-9 h-9 rounded-full overflow-hidden bg-slate-100 shrink-0">
+                        <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-[#E7E1D9] bg-[#F0ECE6]">
                           <Image
                             src={review.avatar.url}
-                            alt={review.name}
+                            alt={review.name || "Customer"}
                             fill
-                            sizes="36px"
+                            unoptimized
+                            sizes="44px"
                             className="object-cover"
                           />
                         </div>
                       ) : (
-                        <div className="w-9 h-9 rounded-full bg-blue-50 text-blue-600 font-bold text-xs flex items-center justify-center shrink-0 border border-blue-100">
-                          {review.name ? review.name.charAt(0) : "C"}
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#D8C9B8] bg-[#F0ECE6] font-serif text-lg text-[#51463B]">
+                          {review.name?.charAt(0)?.toUpperCase() || "C"}
                         </div>
                       )}
 
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-xs font-bold text-slate-900 truncate">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="truncate text-sm font-medium text-[#211F1C]">
                           {review.name}
-                        </h4>
-                        <p className="text-[11px] text-slate-500 truncate flex items-center gap-1">
-                          <Building2 className="w-3 h-3 text-slate-400 shrink-0" />
-                          <span>{review.job_title}</span>
-                          {review.company_name ? (
-                            <span>{review.company_name}</span>
-                          ) : null}
+                        </h3>
+
+                        <p className="mt-1 flex min-w-0 items-center gap-1.5 text-xs text-[#756C62]">
+                          <Building2 className="h-3 w-3 shrink-0 text-[#9D8974]" />
+                          <span className="truncate">
+                            {[review.job_title, review.company_name]
+                              .filter(Boolean)
+                              .join(" · ")}
+                          </span>
                         </p>
                       </div>
                     </div>
 
                     {review.product && (
-                      <div className="text-[10px] font-medium text-slate-500 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 flex items-center gap-1.5">
-                        <PackageCheck className="w-3 h-3 text-blue-600 shrink-0" />
-                        <span className="text-slate-400">
+                      <div className="mt-5 flex min-w-0 items-center gap-2 border-t border-[#F0ECE6] pt-4 text-xs">
+                        <PackageCheck className="h-3.5 w-3.5 shrink-0 text-[#9D8974]" />
+
+                        <span className="shrink-0 text-[#756C62]">
                           {content.productLabel}
                         </span>
+
                         <Link
                           href={`/products/${review.product.slug}`}
-                          className="text-slate-700 hover:text-blue-600 font-semibold truncate transition"
+                          className="truncate font-medium text-[#51463B] underline decoration-[#D8C9B8] underline-offset-4 transition-colors hover:text-[#9D8974]"
                         >
                           {review.product.name}
                         </Link>
                       </div>
                     )}
                   </div>
-                </div>
+                </article>
               ))}
             </motion.div>
+          </div>
+        )}
+
+        {/* Closing note */}
+        {!isLoading && !isError && reviews.length > 0 && (
+          <div className="flex flex-col gap-4 border-t border-[#D8C9B8] pt-7 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-xl text-xs leading-6 text-[#756C62] sm:text-sm">
+              {content.footerNote}
+            </p>
+
+            <Link
+              href="/contact"
+              className="group inline-flex shrink-0 items-center gap-3 text-xs font-medium uppercase tracking-[0.15em] text-[#211F1C] transition-colors hover:text-[#806B55]"
+            >
+              {content.primaryCta}
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D8C9B8] transition-all duration-300 group-hover:border-[#211F1C] group-hover:bg-[#211F1C] group-hover:text-white">
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </span>
+            </Link>
           </div>
         )}
       </div>

@@ -7,11 +7,6 @@ export const collectionSchema = z.object({
         .min(1, "Collection name is required")
         .max(255, "Collection name cannot exceed 255 characters"),
     description: z.string().optional(),
-    cover_media_url: z
-        .string()
-        .url("Must be a valid URL")
-        .or(z.literal(""))
-        .optional(),
     status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]).optional(),
 });
 

@@ -6,7 +6,6 @@ export interface UpdateCollectionPayload {
     slug?: string;
     description?: string;
     brand_id?: string;
-    cover_media_url?: string;
     status?: "DRAFT" | "PUBLISHED" | "ARCHIVED";
 }
 

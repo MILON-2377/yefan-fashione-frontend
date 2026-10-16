@@ -2,12 +2,10 @@
 
 import { useFormContext } from "react-hook-form";
 import { CreateProductInput } from "../../schemas/product";
-import { useBrands } from "../../../brands/hooks/useBrands";
 import { useCollections } from "../../../collections/hooks/useCollections";
 import { useCategories } from "@/features/admin/categories/hooks/useCategories";
 
 export function BasicInfoSection() {
-  const { data: brands } = useBrands();
   const { data: collections } = useCollections();
   const { data: categories } = useCategories();
 
@@ -28,29 +26,6 @@ export function BasicInfoSection() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {/* Brand */}
-        <div>
-          <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
-            Brand <span className="text-rose-500">*</span>
-          </label>
-          <select
-            {...register("brand_id")}
-            className="w-full px-3.5 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition-all"
-          >
-            <option value="">Select Brand</option>
-            {brands?.items?.map((b: any) => (
-              <option key={b.id} value={b.id}>
-                {b.name}
-              </option>
-            ))}
-          </select>
-          {errors.brand_id && (
-            <p className="text-xs text-rose-600 mt-1">
-              {errors.brand_id.message}
-            </p>
-          )}
-        </div>
-
         {/* Collection */}
         <div>
           <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
@@ -96,22 +71,22 @@ export function BasicInfoSection() {
             </p>
           )}
         </div>
-      </div>
 
-      {/* Product Name */}
-      <div>
-        <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
-          Product Name <span className="text-rose-500">*</span>
-        </label>
-        <input
-          {...register("name")}
-          type="text"
-          placeholder="e.g. Celestia Silk Gown"
-          className="w-full px-3.5 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition-all"
-        />
-        {errors.name && (
-          <p className="text-xs text-rose-600 mt-1">{errors.name.message}</p>
-        )}
+        {/* Product Name */}
+        <div>
+          <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
+            Product Name <span className="text-rose-500">*</span>
+          </label>
+          <input
+            {...register("name")}
+            type="text"
+            placeholder="e.g. Celestia Silk Gown"
+            className="w-full px-3.5 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition-all"
+          />
+          {errors.name && (
+            <p className="text-xs text-rose-600 mt-1">{errors.name.message}</p>
+          )}
+        </div>
       </div>
 
       {/* Description */}

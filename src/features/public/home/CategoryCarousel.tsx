@@ -1,203 +1,11 @@
-// "use client";
-
-// import { useState, useEffect, useCallback, useRef } from "react";
-// import Image from "next/image";
-// import Link from "next/link";
-// import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
-// import { motion } from "framer-motion";
-// import { Button } from "@/components/ui/button";
-// import { Category } from "@/types";
-
-// interface CategoryCarouselProps {
-//   categories: Category[];
-//   autoPlayInterval?: number;
-// }
-
-// export function CategoryCarousel({
-//   categories,
-//   autoPlayInterval = 3500,
-// }: CategoryCarouselProps) {
-//   const [currentIndex, setCurrentIndex] = useState(0);
-//   const [isHovered, setIsHovered] = useState(false);
-//   const touchStartX = useRef<number | null>(null);
-
-//   const nextSlide = useCallback(() => {
-//     if (categories.length === 0) return;
-//     setCurrentIndex((prev) => (prev + 1) % categories.length);
-//   }, [categories.length]);
-
-//   const prevSlide = useCallback(() => {
-//     if (categories.length === 0) return;
-//     setCurrentIndex(
-//       (prev) => (prev - 1 + categories.length) % categories.length,
-//     );
-//   }, [categories.length]);
-
-//   // Auto-play loop (pauses when user hovers over cards)
-//   useEffect(() => {
-//     if (isHovered || categories.length <= 1) return;
-//     const timer = setInterval(() => {
-//       nextSlide();
-//     }, autoPlayInterval);
-//     return () => clearInterval(timer);
-//   }, [nextSlide, isHovered, categories.length, autoPlayInterval]);
-
-//   // Touch handlers for mobile swiping
-//   const handleTouchStart = (e: React.TouchEvent) => {
-//     touchStartX.current = e.touches[0].clientX;
-//   };
-
-//   const handleTouchEnd = (e: React.TouchEvent) => {
-//     if (touchStartX.current === null) return;
-//     const touchEndX = e.changedTouches[0].clientX;
-//     const diff = touchStartX.current - touchEndX;
-
-//     if (Math.abs(diff) > 50) {
-//       if (diff > 0) nextSlide();
-//       else prevSlide();
-//     }
-//     touchStartX.current = null;
-//   };
-
-//   if (!categories || categories.length === 0) return null;
-
-//   return (
-//     <div
-//       className="relative w-full"
-//       onMouseEnter={() => setIsHovered(true)}
-//       onMouseLeave={() => setIsHovered(false)}
-//       onTouchStart={handleTouchStart}
-//       onTouchEnd={handleTouchEnd}
-//     >
-//       {/* Navigation Controls */}
-//       <div className="flex items-center justify-between mb-8">
-//         <div>
-//           <span className="text-xs font-bold text-blue-600 tracking-wider uppercase">
-//             Product Range
-//           </span>
-//           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
-//             Explore Categories
-//           </h2>
-//         </div>
-
-//         <div className="flex items-center gap-2">
-//           <Button
-//             type="button"
-//             variant="outline"
-//             size="icon"
-//             onClick={prevSlide}
-//             className="h-10 w-10 rounded-full border-slate-200 bg-white hover:bg-slate-100 text-slate-700 transition shadow-sm"
-//             aria-label="Previous Category"
-//           >
-//             <ChevronLeft className="w-5 h-5" />
-//           </Button>
-//           <Button
-//             type="button"
-//             variant="outline"
-//             size="icon"
-//             onClick={nextSlide}
-//             className="h-10 w-10 rounded-full border-slate-200 bg-white hover:bg-slate-100 text-slate-700 transition shadow-sm"
-//             aria-label="Next Category"
-//           >
-//             <ChevronRight className="w-5 h-5" />
-//           </Button>
-//         </div>
-//       </div>
-
-//       {/* Carousel Track */}
-//       <div className="overflow-hidden rounded-2xl py-2">
-//         <motion.div
-//           className="flex gap-6"
-//           animate={{
-//             x: `calc(-${currentIndex * (100 / getVisibleSlides())}% - ${
-//               currentIndex * (24 / getVisibleSlides())
-//             }px)`,
-//           }}
-//           transition={{ type: "spring", stiffness: 260, damping: 28 }}
-//         >
-//           {categories.map((cat) => (
-//             <div
-//               key={cat.id}
-//               className="min-w-[85%] sm:min-w-[45%] lg:min-w-[28%] shrink-0"
-//             >
-//               <Link
-//                 href={`/products?category=${cat.slug}`}
-//                 className="group relative block overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-sm hover:shadow-xl hover:border-blue-300 transition-all duration-300"
-//               >
-//                 {/* Category Image Container */}
-//                 <div className="relative h-64 w-full overflow-hidden bg-slate-100">
-//                   <Image
-//                     src={cat.imageUrl || "/images/placeholder-category.jpg"}
-//                     alt={cat.name}
-//                     fill
-//                     sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 28vw"
-//                     className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-//                   />
-//                   <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
-
-//                   {/* Badge & Quick Link */}
-//                   <div className="absolute top-4 right-4 h-9 w-9 rounded-full bg-white/90 backdrop-blur-md text-slate-900 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300 shadow-md">
-//                     <ArrowUpRight className="w-4 h-4 text-blue-600" />
-//                   </div>
-//                 </div>
-
-//                 {/* Content Overlay */}
-//                 <div className="absolute bottom-0 inset-x-0 p-5 text-white">
-//                   <span className="text-[11px] font-medium tracking-wider uppercase text-blue-300 bg-blue-950/60 px-2.5 py-1 rounded-md backdrop-blur-md inline-block mb-2">
-//                     {cat.itemCount || 0} Products
-//                   </span>
-//                   <h3 className="text-lg font-bold text-white tracking-tight group-hover:text-blue-200 transition-colors">
-//                     {cat.name}
-//                   </h3>
-//                   {cat.description && (
-//                     <p className="text-xs text-slate-300 line-clamp-1 mt-1 font-normal opacity-90">
-//                       {cat.description}
-//                     </p>
-//                   )}
-//                 </div>
-//               </Link>
-//             </div>
-//           ))}
-//         </motion.div>
-//       </div>
-
-//       {/* Pagination Dots */}
-//       <div className="flex items-center justify-center gap-1.5 mt-6">
-//         {categories.map((_, idx) => (
-//           <button
-//             key={idx}
-//             onClick={() => setCurrentIndex(idx)}
-//             className={`h-1.5 rounded-full transition-all duration-300 ${
-//               currentIndex === idx
-//                 ? "w-8 bg-blue-600"
-//                 : "w-2 bg-slate-300 hover:bg-slate-400"
-//             }`}
-//             aria-label={`Go to category slide ${idx + 1}`}
-//           />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
-// // Helper function to calculate responsive slide offsets
-// function getVisibleSlides() {
-//   if (typeof window === "undefined") return 3;
-//   if (window.innerWidth < 640) return 1;
-//   if (window.innerWidth < 1024) return 2;
-//   return 3;
-// }
-
-
-
-
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+
 import { Button } from "@/features/common/ui/button";
 import { PublicCategoryItem } from "@/features/public/categories/types/categoryTypes";
 
@@ -206,72 +14,157 @@ interface CategoryCarouselProps {
   autoPlayInterval?: number;
 }
 
+const GAP = 24;
+
 export function CategoryCarousel({
   categories,
-  autoPlayInterval = 3500,
+  autoPlayInterval = 5000,
 }: CategoryCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleSlides, setVisibleSlides] = useState(1);
+  const [slideWidth, setSlideWidth] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [visibleSlides, setVisibleSlides] = useState(3);
+  const [isDocumentVisible, setIsDocumentVisible] = useState(true);
+
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const firstSlideRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
 
-  // Safely calculate responsive visible slides after mount (prevents SSR hydration error)
+  const prefersReducedMotion = useReducedMotion();
+
+  const maxIndex = Math.max(0, categories.length - visibleSlides);
+
+  const pageCount = Math.max(1, Math.ceil(categories.length / visibleSlides));
+
+  const pageStarts = useMemo(
+    () =>
+      Array.from({ length: pageCount }, (_, page) =>
+        Math.min(page * visibleSlides, maxIndex),
+      ).filter(
+        (index, position, indexes) => indexes.indexOf(index) === position,
+      ),
+    [pageCount, visibleSlides, maxIndex],
+  );
+
+  // Responsive slide count. ResizeObserver tracks container changes,
+  // including changes that do not originate from the browser window.
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setVisibleSlides(1);
-      } else if (window.innerWidth < 1024) {
-        setVisibleSlides(2);
-      } else {
-        setVisibleSlides(3);
-      }
+    const viewport = viewportRef.current;
+
+    if (!viewport) return;
+
+    const updateLayout = () => {
+      const width = viewport.clientWidth;
+
+      const slides = width < 640 ? 1 : width < 1024 ? 2 : 3;
+
+      setVisibleSlides(slides);
+
+      const nextSlideWidth = (width - GAP * (slides - 1)) / slides;
+
+      setSlideWidth(nextSlideWidth);
     };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    updateLayout();
+
+    const observer = new ResizeObserver(updateLayout);
+    observer.observe(viewport);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Pause autoplay when the tab is not visible.
+  useEffect(() => {
+    const updateVisibility = () => {
+      setIsDocumentVisible(!document.hidden);
+    };
+
+    updateVisibility();
+
+    document.addEventListener("visibilitychange", updateVisibility);
+
+    return () => {
+      document.removeEventListener("visibilitychange", updateVisibility);
+    };
   }, []);
 
   const nextSlide = useCallback(() => {
-    if (categories.length === 0) return;
-    setCurrentIndex((prev) => (prev + 1) % categories.length);
-  }, [categories.length]);
+    if (categories.length <= visibleSlides) return;
+
+    setCurrentIndex((index) =>
+      index >= maxIndex ? 0 : Math.min(index + 1, maxIndex),
+    );
+  }, [categories.length, visibleSlides, maxIndex]);
 
   const prevSlide = useCallback(() => {
-    if (categories.length === 0) return;
-    setCurrentIndex(
-      (prev) => (prev - 1 + categories.length) % categories.length
-    );
-  }, [categories.length]);
+    if (categories.length <= visibleSlides) return;
 
-  // Auto-play loop
+    setCurrentIndex((index) => (index <= 0 ? maxIndex : index - 1));
+  }, [categories.length, visibleSlides, maxIndex]);
+
+  const goToPage = useCallback(
+    (index: number) => {
+      const targetIndex = pageStarts[index];
+
+      if (targetIndex !== undefined) {
+        setCurrentIndex(targetIndex);
+      }
+    },
+    [pageStarts],
+  );
+
+  // Autoplay
   useEffect(() => {
-    if (isHovered || categories.length <= 1) return;
-    const timer = setInterval(() => {
-      nextSlide();
-    }, autoPlayInterval);
-    return () => clearInterval(timer);
-  }, [nextSlide, isHovered, categories.length, autoPlayInterval]);
+    if (
+      prefersReducedMotion ||
+      isHovered ||
+      !isDocumentVisible ||
+      categories.length <= visibleSlides ||
+      autoPlayInterval <= 0
+    ) {
+      return;
+    }
 
-  // Touch handlers for mobile swiping
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
+    const timer = window.setInterval(nextSlide, autoPlayInterval);
+
+    return () => window.clearInterval(timer);
+  }, [
+    nextSlide,
+    isHovered,
+    isDocumentVisible,
+    prefersReducedMotion,
+    categories.length,
+    visibleSlides,
+    autoPlayInterval,
+  ]);
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
     if (touchStartX.current === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX.current - touchEndX;
 
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) nextSlide();
+    const touchEndX = event.changedTouches[0]?.clientX;
+
+    if (touchEndX === undefined) {
+      touchStartX.current = null;
+      return;
+    }
+
+    const difference = touchStartX.current - touchEndX;
+
+    if (Math.abs(difference) > 50) {
+      if (difference > 0) nextSlide();
       else prevSlide();
     }
+
     touchStartX.current = null;
   };
 
-  if (!categories || categories.length === 0) return null;
+  if (categories.length === 0) return null;
 
+  const translateX = currentIndex * (slideWidth + GAP);
   return (
     <div
       className="relative w-full"
@@ -280,83 +173,111 @@ export function CategoryCarousel({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Navigation Controls */}
-      <div className="flex items-center justify-between mb-8">
+      {/* Section Heading */}
+      <div className="mb-8 flex items-end justify-between gap-4 sm:mb-10">
         <div>
-          <span className="text-xs font-bold text-blue-600 tracking-wider uppercase">
+          <span className="text-xs font-medium uppercase tracking-[0.22em] text-[#9D8974]">
             Product Range
           </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1">
+
+          <h2 className="mt-2 font-serif text-3xl font-normal tracking-tight text-[#211F1C] sm:text-4xl">
             Explore Categories
           </h2>
+
+          <p className="mt-3 max-w-lg text-sm leading-6 text-[#625D57]">
+            Discover thoughtfully curated collections for your boutique and
+            retail business.
+          </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            onClick={prevSlide}
-            className="h-10 w-10 rounded-full border-slate-200 bg-white hover:bg-slate-100 text-slate-700 transition shadow-xs"
-            aria-label="Previous Category"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            onClick={nextSlide}
-            className="h-10 w-10 rounded-full border-slate-200 bg-white hover:bg-slate-100 text-slate-700 transition shadow-xs"
-            aria-label="Next Category"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </Button>
-        </div>
+        {categories.length > visibleSlides && (
+          <div className="flex shrink-0 items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              onClick={prevSlide}
+              className="h-10 w-10 rounded-full border-[#E7E1D9] bg-white text-[#51463B] shadow-xs transition-colors hover:border-[#D8C9B8] hover:bg-[#F0ECE6] hover:text-[#211F1C]"
+              aria-label="Previous categories"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              onClick={nextSlide}
+              className="h-10 w-10 rounded-full border-[#E7E1D9] bg-white text-[#51463B] shadow-xs transition-colors hover:border-[#D8C9B8] hover:bg-[#F0ECE6] hover:text-[#211F1C]"
+              aria-label="Next categories"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
+          </div>
+        )}
       </div>
 
-      {/* Carousel Track */}
-      <div className="overflow-hidden rounded-2xl py-2">
+      {/* Carousel Viewport */}
+      <div ref={viewportRef} className="overflow-hidden">
         <motion.div
-          className="flex gap-6"
-          animate={{
-            x: `calc(-${currentIndex * (100 / visibleSlides)}% - ${
-              currentIndex * (24 / visibleSlides)
-            }px)`,
-          }}
-          transition={{ type: "spring", stiffness: 260, damping: 28 }}
+          className="flex"
+          style={{ gap: GAP }}
+          animate={{ x: -translateX }}
+          transition={
+            prefersReducedMotion
+              ? { duration: 0 }
+              : {
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 30,
+                }
+          }
         >
-          {categories.map((cat) => (
+          {categories.map((category, index) => (
             <div
-              key={cat.id}
-              className="min-w-[85%] sm:min-w-[45%] lg:min-w-[28%] shrink-0"
+              key={category.id}
+              ref={index === 0 ? firstSlideRef : undefined}
+              className="min-w-0 shrink-0"
+              style={{
+                width:
+                  slideWidth > 0
+                    ? `${slideWidth}px`
+                    : `calc((100% - ${GAP * (visibleSlides - 1)}px) / ${visibleSlides})`,
+              }}
             >
               <Link
-                href={`/categories/${cat.slug}`}
-                className="group relative block overflow-hidden rounded-xl border border-slate-200/80 bg-white shadow-xs hover:shadow-xl hover:border-blue-300 transition-all duration-300"
+                href={`/products`}
+                className="group relative block overflow-hidden rounded-lg border border-[#E7E1D9] bg-white shadow-xs transition-shadow duration-300 hover:shadow-lg"
               >
-                {/* Category Image Container */}
-                <div className="relative h-64 w-full overflow-hidden bg-slate-100">
+                {/* Image */}
+                <div className="relative h-72 overflow-hidden bg-[#F0ECE6] sm:h-80 lg:h-[360px]">
                   <Image
-                    src={cat.image?.url || "/Yee_Fan_Logo.jpg"}
-                    alt={cat.name}
+                    src={category.image?.url || "/Yee_Fan_Logo.jpg"}
+                    alt={category.name}
                     fill
-                    sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 28vw"
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
 
-                  {/* Quick Link Badge */}
-                  <div className="absolute top-4 right-4 h-9 w-9 rounded-full bg-white/90 backdrop-blur-md text-slate-900 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-2 transition-all duration-300 shadow-md">
-                    <ArrowUpRight className="w-4 h-4 text-blue-600" />
+                  {/* Readable image overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#211F1C]/75 via-[#211F1C]/10 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
+
+                  {/* Arrow */}
+                  <div className="absolute right-4 top-4 flex h-9 w-9 translate-x-2 items-center justify-center rounded-full bg-[#FAF8F4]/95 text-[#211F1C] opacity-0 shadow-sm backdrop-blur-sm transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                    <ArrowUpRight className="h-4 w-4" />
                   </div>
-                </div>
 
-                {/* Content Overlay */}
-                <div className="absolute bottom-0 inset-x-0 p-5 text-white">
-                  <h3 className="text-lg font-bold text-white tracking-tight group-hover:text-blue-200 transition-colors">
-                    {cat.name}
-                  </h3>
+                  {/* Category Name */}
+                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+                    <h3 className="font-serif text-xl font-normal tracking-wide text-white transition-colors group-hover:text-[#E9E0D5] sm:text-2xl">
+                      {category.name}
+                    </h3>
+
+                    <span className="mt-3 inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.2em] text-white/85">
+                      Explore Collection
+                      <ArrowUpRight className="h-3 w-3" />
+                    </span>
+                  </div>
                 </div>
               </Link>
             </div>
@@ -364,22 +285,30 @@ export function CategoryCarousel({
         </motion.div>
       </div>
 
-      {/* Pagination Dots */}
-      <div className="flex items-center justify-center gap-1.5 mt-6">
-        {categories.map((_, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => setCurrentIndex(idx)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              currentIndex === idx
-                ? "w-8 bg-blue-600"
-                : "w-2 bg-slate-300 hover:bg-slate-400"
-            }`}
-            aria-label={`Go to category slide ${idx + 1}`}
-          />
-        ))}
-      </div>
+      {/* Pagination */}
+      {pageStarts.length > 1 && (
+        <div
+          className="mt-7 flex items-center justify-center gap-2"
+          aria-label="Category carousel pagination"
+        >
+          {pageStarts.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => goToPage(index)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                currentIndex === pageStarts[index]
+                  ? "w-8 bg-[#211F1C]"
+                  : "w-1.5 bg-[#D8C9B8] hover:bg-[#9D8974]"
+              }`}
+              aria-label={`Go to category page ${index + 1}`}
+              aria-current={
+                currentIndex === pageStarts[index] ? "true" : undefined
+              }
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

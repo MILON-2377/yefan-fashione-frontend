@@ -3,7 +3,7 @@
 import { useFormContext } from "react-hook-form";
 import { Folder } from "lucide-react";
 import { CreateCatalogFormValues } from "../schemas/createCatalogSchema";
-import { useCollections } from "@/features/admin/collections/hooks/useCollections";
+import { useUnusedCollections } from "../../collections/hooks/useUnusedCollections";
 
 export function CreateCatalogBasicInfo() {
   const {
@@ -11,7 +11,7 @@ export function CreateCatalogBasicInfo() {
     formState: { errors },
   } = useFormContext<CreateCatalogFormValues>();
 
-  const { data: collectionsData, isLoading: isLoadingCollections } = useCollections();
+  const { data: collectionsData, isLoading: isLoadingCollections } = useUnusedCollections();
   const collections = collectionsData?.items || [];
 
   return (

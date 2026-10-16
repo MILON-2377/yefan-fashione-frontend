@@ -65,11 +65,11 @@ export function MobileNav({ categories = [] }: MobileNavProps) {
         variant="ghost"
         iconOnly
         onClick={() => setIsOpen(!isOpen)}
-        className="text-slate-700 hover:text-blue-600 hover:bg-slate-100 h-9 w-9 rounded-md transition-colors"
+        className="h-9 w-9 rounded-md text-[#51463B] transition-colors hover:bg-[#F0ECE6] hover:text-[#211F1C]"
         aria-label={isOpen ? "Close menu" : "Open menu"}
         aria-expanded={isOpen}
       >
-        <Menu className="w-5 h-5" />
+        <Menu className="h-5 w-5" />
       </AppButton>
 
       {/* Render Drawer into document.body via Portal */}
@@ -86,7 +86,7 @@ export function MobileNav({ categories = [] }: MobileNavProps) {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
                   onClick={handleClose}
-                  className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm"
+                  className="fixed inset-0 z-50 bg-[#211F1C]/60 backdrop-blur-sm"
                   aria-hidden="true"
                 />
 
@@ -101,77 +101,81 @@ export function MobileNav({ categories = [] }: MobileNavProps) {
                     stiffness: 320,
                     damping: 32,
                   }}
-                  className="fixed top-0 right-0 z-50 h-full w-80 sm:w-96 bg-white border-l border-slate-200 text-slate-800 shadow-2xl flex flex-col justify-between p-6 overflow-y-auto"
+                  className="fixed top-0 right-0 z-50 flex h-full w-80 flex-col justify-between overflow-y-auto border-l border-[#E7E1D9] bg-[#FAF8F4] p-6 text-[#211F1C] shadow-2xl sm:w-96"
                   role="dialog"
                   aria-modal="true"
                   aria-label="Mobile Navigation"
                 >
                   <div className="space-y-6">
                     {/* Header Row */}
-                    <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-                      <span className="font-black text-xl tracking-tight text-slate-900">
-                        YEE<span className="text-blue-600">FANS</span>
+                    <div className="flex items-center justify-between border-b border-[#E7E1D9] pb-4">
+                      <span className="text-xl font-black tracking-tight text-[#211F1C]">
+                        YEE<span className="text-[#9D8974]">FANS</span>
                       </span>
+
                       <AppButton
                         type="button"
                         variant="ghost"
                         iconOnly
                         onClick={handleClose}
-                        className="text-slate-500 hover:text-slate-900 hover:bg-slate-100 h-8 w-8 rounded-full"
+                        className="h-8 w-8 rounded-full text-[#625D57] hover:bg-[#F0ECE6] hover:text-[#211F1C]"
                         aria-label="Close menu"
                       >
-                        <X className="w-4 h-4" />
+                        <X className="h-4 w-4" />
                       </AppButton>
                     </div>
 
-                    {/* Staggered Nav Links */}
-                    <nav className="flex flex-col gap-1 text-sm font-medium text-slate-700">
+                    {/* Navigation Links */}
+                    <nav className="flex flex-col gap-1 text-sm font-medium text-[#51463B]">
                       {mainNavLinks.slice(0, 1).map((link) => (
                         <Link
                           key={link.href}
                           href={link.href}
                           onClick={handleClose}
-                          className="py-2.5 px-3 hover:bg-slate-100 hover:text-blue-600 rounded-lg transition-colors font-semibold"
+                          className="rounded-lg px-3 py-2.5 font-semibold transition-colors hover:bg-[#F0ECE6] hover:text-[#211F1C]"
                         >
                           {link.title}
                         </Link>
                       ))}
 
-                      {/* Section Label: Categories */}
-                      <div className="flex items-center justify-between py-2 px-3 font-bold text-xs uppercase tracking-wider text-slate-500 border-y border-slate-100 mt-2 mb-1 bg-slate-50/80 rounded-md">
-                        <span>{navLabels.products}</span>
+                      {/* Categories */}
+                      <div className="mt-2 mb-1 flex items-center justify-between rounded-md border-y border-[#E7E1D9] bg-[#F0ECE6]/70 px-3 py-2">
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#625D57]">
+                          {navLabels.products}
+                        </span>
+
                         <Link
                           href="/products"
                           onClick={handleClose}
-                          className="text-blue-600 hover:underline text-[11px] font-bold tracking-normal uppercase"
+                          className="text-[11px] font-bold uppercase tracking-normal text-[#51463B] hover:text-[#211F1C] hover:underline"
                         >
                           {navLabels.home === "首页" ? "查看全部" : "View All"}
                         </Link>
                       </div>
 
-                      {/* Filter-linked Category Links */}
-                      <div className="max-h-48 overflow-y-auto space-y-0.5 no-scrollbar pl-1">
+                      {/* Category Links */}
+                      <div className="no-scrollbar max-h-48 space-y-0.5 overflow-y-auto pl-1">
                         {categories.map((cat) => (
                           <Link
                             key={cat.id}
                             href={`/products?category_id=${encodeURIComponent(cat.id)}`}
                             onClick={handleClose}
-                            className="flex items-center justify-between py-2 px-3 text-xs font-semibold text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-all"
+                            className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold text-[#625D57] transition-all hover:bg-[#F0ECE6] hover:text-[#211F1C]"
                           >
                             <span>{cat.name}</span>
-                            <ArrowRight className="w-3 h-3 text-slate-400" />
+                            <ArrowRight className="h-3 w-3 text-[#9D8974]" />
                           </Link>
                         ))}
                       </div>
 
-                      <div className="border-t border-slate-100 my-2" />
+                      <div className="my-2 border-t border-[#E7E1D9]" />
 
                       {mainNavLinks.slice(1).map((link) => (
                         <Link
                           key={link.href}
                           href={link.href}
                           onClick={handleClose}
-                          className="py-2.5 px-3 hover:bg-slate-100 hover:text-blue-600 rounded-lg transition-colors font-semibold"
+                          className="rounded-lg px-3 py-2.5 font-semibold transition-colors hover:bg-[#F0ECE6] hover:text-[#211F1C]"
                         >
                           {link.title}
                         </Link>
@@ -179,12 +183,12 @@ export function MobileNav({ categories = [] }: MobileNavProps) {
                     </nav>
                   </div>
 
-                  {/* Bottom CTA Button */}
-                  <div className="pt-6 border-t border-slate-100 mt-6">
+                  {/* Bottom CTA */}
+                  <div className="mt-6 border-t border-[#E7E1D9] pt-6">
                     <AppButton
                       render={<Link href="/contact" onClick={handleClose} />}
                       variant="primary"
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-3 rounded-xl shadow-xs"
+                      className="w-full rounded-lg bg-[#211F1C] py-3 text-xs font-medium text-white shadow-xs transition-colors hover:bg-[#51463B]"
                     >
                       {dict.hero.secondaryCta}
                     </AppButton>

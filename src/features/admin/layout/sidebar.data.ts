@@ -5,7 +5,6 @@ import {
   Layers,
   Tags,
   Boxes,
-  Users,
   Settings,
   LucideIcon,
   ShieldCheck,
@@ -48,12 +47,7 @@ export const adminSidebarNavigation: NavSection[] = [
         icon: UserPlus,
         allowedRoles: ["SUPER_ADMIN"],
       },
-      {
-        label: "Team & Access",
-        href: "/admin/users",
-        icon: Users,
-        allowedRoles: ["SUPER_ADMIN"],
-      },
+
       {
         label: "Settings",
         href: "/admin/settings",

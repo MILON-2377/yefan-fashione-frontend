@@ -18,34 +18,39 @@ export default function PublicDownloadPage() {
   const featuredCatalog = catalogs[0];
 
   return (
-    <div className="bg-white text-slate-900 py-12 lg:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* ========================================================= */}
-          {/* LEFT MAIN CONTENT AREA (~70% Width)                       */}
-          {/* ========================================================= */}
-          <div className="lg:col-span-8 space-y-12">
-            {/* Header Section */}
-            <section className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider">
-                <Sparkles className="w-4 h-4 text-blue-600" />
+    <div className="bg-[#FAF8F4] py-12 text-[#211F1C] lg:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
+          {/* Main Content */}
+          <div className="space-y-12 lg:col-span-8">
+            {/* Page Header */}
+            <section className="space-y-4 border-b border-[#D8C9B8] pb-8 sm:pb-10">
+              <div className="inline-flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.24em] text-[#9D8974] sm:text-[10px]">
+                <Sparkles className="h-4 w-4" />
                 <span>{content.badge}</span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+              <h1 className="max-w-3xl font-serif text-3xl font-normal leading-tight tracking-tight text-[#211F1C] sm:text-4xl lg:text-5xl">
                 {content.heading}
               </h1>
 
-              <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
+              <p className="max-w-2xl text-sm leading-7 text-[#625D57] sm:text-base sm:leading-8">
                 {content.subheading}
               </p>
+
+              <div className="flex items-center gap-3 pt-2">
+                <span className="h-px w-10 bg-[#9D8974]" />
+                <span className="text-[9px] font-medium uppercase tracking-[0.18em] text-[#817970]">
+                  Collections · Craftsmanship · Specifications
+                </span>
+              </div>
             </section>
 
-            {/* Featured Hero Catalog Card */}
+            {/* Featured Catalog */}
             {isLoading ? (
-              <div className="bg-slate-900 text-white rounded-2xl p-12 text-center space-y-2">
-                <Sparkles className="w-6 h-6 text-blue-400 animate-spin mx-auto" />
-                <p className="text-xs text-slate-400">
+              <div className="flex flex-col items-center justify-center gap-4 border border-[#E7E1D9] bg-white px-6 py-14 text-center">
+                <Sparkles className="h-6 w-6 animate-spin text-[#9D8974]" />
+                <p className="text-xs leading-6 text-[#625D57]">
                   {content.loadingFeatured}
                 </p>
               </div>
@@ -53,29 +58,46 @@ export default function PublicDownloadPage() {
               <FeaturedCatalogCard catalog={featuredCatalog} />
             ) : null}
 
-            {/* Complete Catalog Download List */}
-            <section className="space-y-6 pt-4">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-                <h3 className="text-2xl font-bold text-slate-900 tracking-tight">
-                  {content.listHeading}
-                </h3>
-                <span className="text-xs font-semibold text-slate-500">
+            {/* Complete Catalog List */}
+            <section className="space-y-6 pt-2">
+              <div className="flex flex-col gap-3 border-b border-[#D8C9B8] pb-4 sm:flex-row sm:items-end sm:justify-between">
+                <div className="space-y-2">
+                  <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-[#9D8974]">
+                    Browse Our Collection
+                  </span>
+                  <h3 className="font-serif text-2xl font-normal tracking-tight text-[#211F1C] sm:text-3xl">
+                    {content.listHeading}
+                  </h3>
+                </div>
+
+                <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-[#817970]">
                   {catalogs.length} {content.documentsCount}
                 </span>
               </div>
 
               {isLoading ? (
-                <div className="p-12 text-center text-xs text-slate-500 space-y-2">
-                  <Sparkles className="w-5 h-5 text-blue-600 animate-spin mx-auto" />
-                  <p>{content.loadingList}</p>
+                <div className="space-y-3">
+                  {[1, 2, 3].map((item) => (
+                    <div
+                      key={item}
+                      className="h-24 animate-pulse border border-[#E7E1D9] bg-white"
+                    />
+                  ))}
+                  <p className="pt-2 text-center text-xs text-[#817970]">
+                    {content.loadingList}
+                  </p>
                 </div>
               ) : catalogs.length === 0 ? (
-                <div className="p-12 text-center space-y-3 bg-slate-50 border border-slate-200 rounded-2xl">
-                  <FileText className="w-8 h-8 text-slate-400 mx-auto" />
-                  <p className="text-xs font-bold text-slate-800">
+                <div className="flex flex-col items-center border border-[#E7E1D9] bg-white px-6 py-12 text-center sm:py-16">
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center border border-[#D8C9B8] bg-[#F0ECE6] text-[#9D8974]">
+                    <FileText className="h-7 w-7" />
+                  </div>
+
+                  <h4 className="font-serif text-xl font-normal text-[#211F1C]">
                     {content.noCatalogsTitle}
-                  </p>
-                  <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
+                  </h4>
+
+                  <p className="mt-2 max-w-sm text-xs leading-6 text-[#625D57] sm:text-sm">
                     {content.noCatalogsDesc}
                   </p>
                 </div>
@@ -88,32 +110,44 @@ export default function PublicDownloadPage() {
               )}
             </section>
 
-            {/* Custom Tech-Pack Request Callout */}
-            <section className="bg-blue-50 border border-blue-200 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="space-y-1 text-center sm:text-left">
-                <h4 className="text-xl font-bold text-slate-900">
-                  {content.ctaHeading}
-                </h4>
-                <p className="text-sm text-slate-600">{content.ctaDesc}</p>
-              </div>
+            {/* Custom Tech-Pack CTA */}
+            <section className="relative overflow-hidden border border-[#D8C9B8] bg-[#F0ECE6] p-6 sm:p-8 lg:p-9">
+              <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full border border-[#D8C9B8]/70" />
+              <div className="pointer-events-none absolute -right-4 -top-4 h-28 w-28 rounded-full border border-[#D8C9B8]/60" />
 
-              <AppButton
-                render={<Link href="/contact" />}
-                variant="primary"
-                rightIcon={<ArrowRight className="w-4 h-4" />}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold shrink-0"
-              >
-                {content.ctaButton}
-              </AppButton>
+              <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+                <div className="max-w-lg space-y-3">
+                  <span className="text-[9px] font-medium uppercase tracking-[0.22em] text-[#9D8974]">
+                    Made for Your Brand
+                  </span>
+
+                  <h4 className="font-serif text-2xl font-normal leading-tight text-[#211F1C] sm:text-3xl">
+                    {content.ctaHeading}
+                  </h4>
+
+                  <p className="text-xs leading-7 text-[#625D57] sm:text-sm">
+                    {content.ctaDesc}
+                  </p>
+                </div>
+
+                <AppButton
+                  render={<Link href="/contact" />}
+                  variant="primary"
+                  rightIcon={<ArrowRight className="h-4 w-4" />}
+                  className="shrink-0 rounded-none border border-[#211F1C] bg-[#211F1C] px-6 py-3.5 text-[10px] font-medium uppercase tracking-[0.14em] text-white shadow-none transition-colors duration-300 hover:border-[#51463B] hover:bg-[#51463B]"
+                >
+                  {content.ctaButton}
+                </AppButton>
+              </div>
             </section>
           </div>
 
-          {/* ========================================================= */}
-          {/* RIGHT SIDEBAR (~30% Width - Sticky)                       */}
-          {/* ========================================================= */}
-          <div className="lg:col-span-4">
-            <CatalogSidebarCategories />
-          </div>
+          {/* Catalog Sidebar */}
+          <aside className="lg:col-span-4">
+            <div className="lg:sticky lg:top-24">
+              <CatalogSidebarCategories />
+            </div>
+          </aside>
         </div>
       </div>
     </div>

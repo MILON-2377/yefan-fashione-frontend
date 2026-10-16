@@ -2,13 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ArrowRight, ShieldCheck } from "lucide-react";
 import { useLogin } from "../hooks/useLogin";
 import { ApiError } from "@/lib/errors/ApiError";
 
 export function LoginForm() {
-  const router = useRouter();
   const { mutate: loginUser, isPending, error } = useLogin();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -32,18 +30,11 @@ export function LoginForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    loginUser(
-      {
-        email: formData.email,
-        password: formData.password,
-        device_name: getDeviceName(),
-      },
-      {
-        onSuccess: () => {
-          router.push("/admin");
-        },
-      },
-    );
+    loginUser({
+      email: formData.email,
+      password: formData.password,
+      device_name: getDeviceName(),
+    });
   };
   const getErrorMessage = (): string | null => {
     if (!error) return null;
@@ -77,99 +68,150 @@ export function LoginForm() {
   };
 
   return (
-    <div className="max-w-md w-full space-y-6 my-auto">
-      <div className="space-y-2">
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight font-serif">
-          Wholesale Portal Sign In
+    <div className="my-auto w-full max-w-md space-y-7">
+      {/* Admin Portal Heading */}
+      <div className="space-y-3">
+        <div className="h-px w-12 bg-[#9D8974]" />
+
+        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#9D8974]">
+          Administration
+        </p>
+
+        <h2 className="font-serif text-3xl font-normal tracking-wide text-[#211F1C] sm:text-4xl">
+          Admin Portal
+          <span className="mt-1 block italic text-[#82705C]">Sign In</span>
         </h2>
-        <p className="text-xs sm:text-sm text-slate-600">
-          Access your saved collections, production schedules, and tech-packs.
+
+        <p className="max-w-sm text-sm leading-6 text-[#625D57]">
+          Sign in to manage products, collections, inquiries, and showroom
+          operations.
         </p>
       </div>
 
+      {/* Error Message */}
       {error && (
-        <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 font-medium">
+        <div
+          role="alert"
+          className="border border-red-200 bg-red-50 px-4 py-3 text-xs leading-relaxed text-red-700"
+        >
           {getErrorMessage()}
         </div>
       )}
 
-      <form className="space-y-4" onSubmit={handleSubmit}>
-        {/* Email */}
-        <div className="space-y-1">
-          <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block font-mono">
-            Corporate Email
+      <form className="space-y-5" onSubmit={handleSubmit}>
+        {/* Admin Email */}
+        <div className="space-y-2">
+          <label
+            htmlFor="email"
+            className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-[#51463B]"
+          >
+            Administrator Email
           </label>
+
           <div className="relative">
-            <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9D8974]" />
+
             <input
+              id="email"
               type="email"
+              autoComplete="username"
               required
-              placeholder="buyer@maisonluxe.com"
+              placeholder="admin@yourcompany.com"
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600 transition"
+              aria-invalid={!!getFieldError("email")}
+              aria-describedby={
+                getFieldError("email") ? "email-error" : undefined
+              }
+              className="w-full border border-[#E7E1D9] bg-[#FAF8F4] py-3.5 pl-11 pr-4 text-sm text-[#211F1C] outline-none transition-colors placeholder:text-[#A69B8F] focus:border-[#9D8974] focus:bg-white focus:ring-1 focus:ring-[#9D8974]/20"
             />
           </div>
+
           {getFieldError("email") && (
-            <p className="text-[11px] text-red-600 mt-1 font-medium">
+            <p id="email-error" className="text-xs text-red-600">
               {getFieldError("email")}
             </p>
           )}
         </div>
 
-        {/* Password */}
-        <div className="space-y-1">
+        {/* Admin Password */}
+        <div className="space-y-2">
+          <label
+            htmlFor="password"
+            className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-[#51463B]"
+          >
+            Password
+          </label>
+
           <div className="relative">
-            <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9D8974]" />
+
             <input
+              id="password"
               type={showPassword ? "text" : "password"}
+              autoComplete="current-password"
               required
-              placeholder="••••••••"
+              placeholder="Enter your password"
               value={formData.password}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
-              className="w-full pl-10 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600 transition"
+              aria-invalid={!!getFieldError("password")}
+              aria-describedby={
+                getFieldError("password") ? "password-error" : undefined
+              }
+              className="w-full border border-[#E7E1D9] bg-[#FAF8F4] py-3.5 pl-11 pr-12 text-sm text-[#211F1C] outline-none transition-colors placeholder:text-[#A69B8F] focus:border-[#9D8974] focus:bg-white focus:ring-1 focus:ring-[#9D8974]/20"
             />
+
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-pressed={showPassword}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9D8974] transition-colors hover:text-[#211F1C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9D8974]"
             >
               {showPassword ? (
-                <EyeOff className="w-4 h-4" />
+                <EyeOff className="h-4 w-4" />
               ) : (
-                <Eye className="w-4 h-4" />
+                <Eye className="h-4 w-4" />
               )}
             </button>
           </div>
+
           {getFieldError("password") && (
-            <p className="text-[11px] text-red-600 mt-1 font-medium">
+            <p id="password-error" className="text-xs text-red-600">
               {getFieldError("password")}
             </p>
           )}
         </div>
 
+        {/* Admin Sign In */}
         <button
           type="submit"
           disabled={isPending}
-          className="w-full mt-2 inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-900 hover:bg-blue-600 text-white font-bold text-xs uppercase tracking-widest rounded-xl transition-all shadow-md disabled:opacity-50"
+          className="mt-2 inline-flex w-full items-center justify-center gap-3 border border-[#211F1C] bg-[#211F1C] px-6 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-white transition-colors duration-200 hover:border-[#51463B] hover:bg-[#51463B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9D8974] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <span>{isPending ? "Authenticating..." : "Sign In to Portal"}</span>
-          <ArrowRight className="w-4 h-4" />
+          <span>{isPending ? "Authenticating..." : "Sign In to Admin"}</span>
+          <ArrowRight className="h-4 w-4" />
         </button>
       </form>
 
-      <div className="pt-4 border-t border-slate-100 text-center text-xs text-slate-600">
-        New prospective buyer?{" "}
-        <Link
-          href="/signup"
-          className="font-extrabold text-blue-600 hover:underline"
-        >
-          Request Partner Access
-        </Link>
+      {/* Admin Security Notice */}
+      <div className="border-t border-[#E7E1D9] pt-5">
+        <div className="flex items-start gap-3">
+          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#9D8974]" />
+          <div className="space-y-1">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#51463B]">
+              Restricted Access
+            </p>
+            <p className="text-xs leading-5 text-[#625D57]">
+              This area is reserved for authorized administrators. If you need
+              access, contact your system administrator.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

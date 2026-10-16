@@ -53,7 +53,6 @@ export const updateCustomizationSchema = z.object({
 export const updateProductSchema = z.object({
     name: z.string().min(1, "Product name is required"),
     description: z.string().default(""),
-    brand_id: z.string().uuid("Please select a brand"),
     collection_id: z.string().uuid("Please select a collection"),
     category_id: z.string().uuid("Please select a category"),
     status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]).default("DRAFT"),
@@ -70,7 +69,6 @@ export type UpdateProductInput = z.infer<typeof updateProductSchema>;
 // Response Entity Interface
 export interface ProductDetailResponse {
     id: string;
-    brand_id: string;
     collection_id: string;
     category_id: string;
     product_code: string;

@@ -1,7 +1,8 @@
 "use client";
 
-import { ShieldCheck, Palette, Layers, Clock } from "lucide-react";
+import { ShieldCheck, Palette, Layers, Clock, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import Link from "next/link";
 
 const ICONS = [Palette, Layers, ShieldCheck, Clock];
 
@@ -10,42 +11,84 @@ export function AdvantageSection() {
   const content = dict.advantageSection;
 
   return (
-    <section className="py-20 bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        {/* Section Title */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <p className="text-xs font-bold tracking-widest text-blue-600 uppercase mb-2">
-            {content.companyTag}
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+    <section className="relative overflow-hidden border-b border-[#E7E1D9] bg-[#F0ECE6] py-20 sm:py-24 lg:py-28">
+      {/* Subtle background accents */}
+      <div className="pointer-events-none absolute -right-32 top-0 h-96 w-96 rounded-full bg-white/60 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-[#D8C9B8]/20 blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-8">
+        {/* Editorial Section Heading */}
+        <div className="mx-auto mb-14 max-w-3xl text-center sm:mb-16">
+          <div className="mb-5 flex items-center justify-center gap-3">
+            <span className="h-px w-8 bg-[#9D8974]" />
+            <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#806B55] sm:text-xs">
+              {content.companyTag}
+            </p>
+            <span className="h-px w-8 bg-[#9D8974]" />
+          </div>
+
+          <h2 className="font-serif text-3xl font-normal leading-tight tracking-tight text-[#211F1C] sm:text-4xl lg:text-5xl">
             {content.heading}
           </h2>
-          <p className="mt-4 text-slate-600 text-sm sm:text-base leading-relaxed">
+
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-[#625D57] sm:text-base sm:leading-8">
             {content.subheading}
           </p>
         </div>
 
-        {/* 4-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Advantages Grid */}
+        <div className="grid grid-cols-1 gap-px overflow-hidden border border-[#E1D8CD] bg-[#E1D8CD] sm:grid-cols-2 lg:grid-cols-4">
           {content.advantages.map((item, index) => {
             const Icon = ICONS[index % ICONS.length];
+
             return (
-              <div
-                key={index}
-                className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-blue-500/40 hover:shadow-lg transition-all duration-300 group"
+              <article
+                key={item.title ?? index}
+                className="group relative flex min-h-65 flex-col bg-[#FAF8F4] p-7 transition-colors duration-500 hover:bg-white sm:p-8 lg:min-h-72.5"
               >
-                <div className="w-12 h-12 rounded-xl bg-blue-600/10 text-blue-600 flex items-center justify-center mb-5 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                  <Icon className="w-6 h-6" />
+                {/* Number and Icon */}
+                <div className="mb-10 flex items-center justify-between">
+                  <span className="font-serif text-sm italic text-[#9D8974]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#D8C9B8] text-[#806B55] transition-all duration-300 group-hover:border-[#211F1C] group-hover:bg-[#211F1C] group-hover:text-white">
+                    <Icon className="h-5 w-5" strokeWidth={1.5} />
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
+
+                {/* Content */}
+                <div className="mt-auto">
+                  <h3 className="font-serif text-xl font-normal leading-snug text-[#211F1C] sm:text-2xl">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-3 text-sm leading-7 text-[#625D57]">
+                    {item.description}
+                  </p>
+
+                  <div className="mt-6 h-px w-8 bg-[#B9A995] transition-all duration-300 group-hover:w-14 group-hover:bg-[#51463B]" />
+                </div>
+              </article>
             );
           })}
+        </div>
+
+        {/* Closing Statement */}
+        <div className="mt-10 flex flex-col items-center justify-between gap-5 border-t border-[#D8C9B8] pt-7 sm:flex-row">
+          <p className="max-w-xl text-center text-xs leading-6 text-[#756C62] sm:text-left sm:text-sm">
+            {content.subheading}
+          </p>
+
+          <Link
+            href="/contact"
+            className="group inline-flex shrink-0 items-center gap-3 text-xs font-medium uppercase tracking-[0.16em] text-[#211F1C] transition-colors hover:text-[#806B55]"
+          >
+            {content.primaryCta ?? "Work With Us"}
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#D8C9B8] transition-all duration-300 group-hover:border-[#211F1C] group-hover:bg-[#211F1C] group-hover:text-white">
+              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </span>
+          </Link>
         </div>
       </div>
     </section>

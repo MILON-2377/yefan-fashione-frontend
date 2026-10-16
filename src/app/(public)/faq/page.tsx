@@ -10,35 +10,69 @@ export default function FaqPage() {
   const content = dict.faqPage;
 
   return (
-    <div className="bg-white text-slate-900 py-12 lg:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 space-y-10">
+    <div className="bg-[#FAF8F4] py-12 text-[#211F1C] lg:py-16">
+      <div className="mx-auto max-w-7xl space-y-10 px-4 sm:px-8 lg:space-y-12">
         {/* Page Header */}
-        <section className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider">
-            <Sparkles className="w-4 h-4 text-blue-600" />
+        <section className="relative max-w-3xl space-y-5 border-b border-[#D8C9B8] pb-8 sm:pb-10">
+          <div className="inline-flex items-center gap-2 border border-[#D8C9B8] bg-white px-3 py-1.5 text-[9px] font-medium uppercase tracking-[0.22em] text-[#806B55] sm:text-[10px]">
+            <Sparkles className="h-4 w-4 text-[#9D8974]" />
             <span>{content.badge}</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+          <h1 className="max-w-3xl font-serif text-3xl font-normal leading-tight tracking-tight text-[#211F1C] sm:text-4xl lg:text-5xl">
             {content.heading}
           </h1>
 
-          <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
+          <p className="max-w-2xl text-sm leading-7 text-[#625D57] sm:text-base sm:leading-8">
             {content.subheading}
           </p>
+
+          <div className="flex items-center gap-3 pt-1">
+            <span className="h-px w-10 bg-[#9D8974]" />
+            <span className="text-[9px] font-medium uppercase tracking-[0.18em] text-[#817970]">
+              Knowledge · Guidance · Support
+            </span>
+          </div>
         </section>
 
-        {/* Two-Column Grid: 70% Left (col-span-8) & 30% Right (col-span-4) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* LEFT SIDE: White AI RAG Chat Component (~70% Width) */}
-          <div className="lg:col-span-8">
-            <FaqChat />
+        {/* FAQ Content */}
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-10">
+          {/* AI-Powered FAQ Chat */}
+          <div className="min-w-0 lg:col-span-8">
+            <div className="mb-4 flex items-center gap-3">
+              <span className="h-px w-6 bg-[#9D8974]" />
+              <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-[#806B55]">
+                Ask Our Assistant
+              </span>
+            </div>
+            <div className="border border-[#E7E1D9] bg-white shadow-[0_4px_24px_rgba(65,52,39,0.03)]">
+              <FaqChat />
+            </div>
           </div>
 
-          {/* RIGHT SIDE: Interactive Accordion FAQs (~30% Width) */}
-          <div className="lg:col-span-4">
-            <FaqAccordion />
-          </div>
+          {/* Frequently Asked Questions */}
+          <aside className="min-w-0 lg:col-span-4">
+            <div className="mb-4 flex items-center gap-3">
+              <span className="h-px w-6 bg-[#9D8974]" />
+              <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-[#806B55]">
+                Quick Answers
+              </span>
+            </div>
+            <div className="border border-[#E7E1D9] bg-white p-4 sm:p-5">
+              <FaqAccordion />
+            </div>
+
+            <div className="mt-5 border border-[#D8C9B8] bg-[#F0ECE6] p-5">
+              <div className="mb-3 flex h-9 w-9 items-center justify-center border border-[#D8C9B8] bg-white text-[#9D8974]">
+                <Sparkles className="h-4 w-4" />
+              </div>
+              <p className="font-serif text-lg text-[#211F1C]">Here to help</p>
+              <p className="mt-2 text-xs leading-6 text-[#625D57]">
+                Find clear answers to your questions and explore the information
+                you need to move forward with confidence.
+              </p>
+            </div>
+          </aside>
         </div>
       </div>
     </div>

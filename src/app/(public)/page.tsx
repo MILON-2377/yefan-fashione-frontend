@@ -1,10 +1,12 @@
 import { AboutSection } from "@/features/public/home/AboutSection";
 import { AdvantageSection } from "@/features/public/home/AdvantageSection";
+import { AtelierGallerySection } from "@/features/public/home/AtelierGallerySection";
 import { CategorySection } from "@/features/public/home/CategorySection";
 import { ClientReviewsSection } from "@/features/public/home/ClientReviewsSection";
 import { FeaturedProducts } from "@/features/public/home/FeaturedProducts";
 import { HeroBannerSection } from "@/features/public/home/hero/HeroBannerSection";
 import { HeroSection } from "@/features/public/home/HeroSection";
+import { HowWeWorkSection } from "@/features/public/home/HowWeWorkSection";
 
 export default function HomePage() {
   return (
@@ -23,6 +25,12 @@ export default function HomePage() {
 
       {/* 3. Featured Products Slider Section */}
       <FeaturedProducts />
+
+      {/* AtelierGallery */}
+      <AtelierGallerySection />
+
+      {/* How We Work Section */}
+      <HowWeWorkSection />
 
       {/* About section */}
       <AboutSection />

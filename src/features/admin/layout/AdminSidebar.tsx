@@ -2,10 +2,12 @@
 
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { LogOut } from "lucide-react";
 import { adminSidebarNavigation } from "./sidebar.data";
 import { SidebarHeader } from "./SidebarHeader";
 import { SidebarNavLink } from "./SidebarNavLink";
 import { UserRole } from "@/features/auth/types";
+import { useLogout } from "@/features/auth/hooks/useLogout";
 
 interface AdminSidebarProps {
   userRole: UserRole;
@@ -42,6 +44,8 @@ export function AdminSidebar({
   isOpen = false,
   onClose,
 }: AdminSidebarProps) {
+  const { mutate: logout, isPending: isLoggingOut } = useLogout();
+
   // Prevent body scrolling when mobile menu drawer is open
   useEffect(() => {
     if (isOpen) {
@@ -64,6 +68,7 @@ export function AdminSidebar({
       ),
     }))
     .filter((section) => section.items.length > 0);
+
   const sidebarContent = (
     <div className="flex flex-col h-full bg-slate-900 text-slate-300 w-64 border-r border-slate-800">
       <SidebarHeader onClose={onClose} />
@@ -81,6 +86,18 @@ export function AdminSidebar({
             </nav>
           </div>
         ))}
+      </div>
+
+      {/* Logout Action Footer */}
+      <div className="p-4 border-t border-slate-800">
+        <button
+          onClick={() => logout()}
+          disabled={isLoggingOut}
+          className="flex items-center gap-3 w-full px-3 py-2.5 text-xs font-medium text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 rounded-xl transition-colors disabled:opacity-50"
+        >
+          <LogOut className="w-4 h-4 shrink-0" />
+          <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
+        </button>
       </div>
     </div>
   );

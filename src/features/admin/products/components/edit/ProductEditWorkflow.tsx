@@ -59,7 +59,6 @@ export function ProductEditWorkflow({ productId }: { productId: string }) {
     defaultValues: {
       name: "",
       description: "",
-      brand_id: "",
       collection_id: "",
       category_id: "",
       status: "DRAFT",
@@ -107,7 +106,6 @@ export function ProductEditWorkflow({ productId }: { productId: string }) {
       reset({
         name: product.name || "",
         description: product.description || "",
-        brand_id: product.brand_id || "",
         collection_id: product.collection_id || "",
         category_id: product.category_id || "",
         status: product.status || "DRAFT",
@@ -167,7 +165,6 @@ export function ProductEditWorkflow({ productId }: { productId: string }) {
     switch (tab) {
       case "basic":
         return [
-          errors.brand_id,
           errors.collection_id,
           errors.category_id,
           errors.name,

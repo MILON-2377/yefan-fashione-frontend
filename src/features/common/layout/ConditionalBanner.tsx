@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight, Home } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Home } from "lucide-react";
 
 const BANNER_IMAGES: Record<string, string> = {
   products:
@@ -18,79 +18,109 @@ const BANNER_IMAGES: Record<string, string> = {
 const DEFAULT_IMAGE =
   "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1920&q=80";
 
+const ROUTE_LABELS: Record<string, string> = {
+  products: "Collection",
+  categories: "Categories",
+  about: "Our Atelier",
+  contact: "Contact",
+  downloads: "Catalogues",
+  faq: "Frequently Asked Questions",
+  login: "Account",
+};
+
+function formatSegment(segment: string) {
+  const decoded = decodeURIComponent(segment);
+  return (
+    ROUTE_LABELS[decoded] ??
+    decoded.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())
+  );
+}
+
 export function ConditionalBanner() {
   const pathname = usePathname();
 
-  // Hide completely on the home page
-  if (pathname === "/") {
+  if (!pathname || pathname === "/") {
     return null;
   }
 
-  // Split path into clean segments
-  const pathSegments = pathname
-    .split("/")
-    .filter((segment) => segment.length > 0);
-
-  // Format the page title
-  const rawTitle = pathSegments[pathSegments.length - 1] || "";
-  const pageTitle = decodeURIComponent(rawTitle)
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
-
-  // Pick background image based on primary section route
+  const pathSegments = pathname.split("/").filter(Boolean);
   const primarySection = pathSegments[0] || "";
   const bgImage = BANNER_IMAGES[primarySection] || DEFAULT_IMAGE;
+  const pageTitle = formatSegment(pathSegments[pathSegments.length - 1] || "");
 
   return (
-    <section className="relative w-full h-[320px] sm:h-[380px] flex items-center justify-center overflow-hidden bg-white border-b border-slate-100 pt-20">
-      {/* Background Boutique Image */}
+    <section className="relative isolate flex min-h-70 w-full items-center justify-center overflow-hidden bg-[#FAF8F4] pt-20 sm:min-h-[340px] lg:min-h-[390px]">
+      {/* Editorial background photography */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 hover:scale-105 opacity-20"
-        style={{ backgroundImage: `url('${bgImage}')` }}
+        aria-hidden="true"
+        className="absolute inset-0 -z-20 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url("${bgImage}")` }}
       />
 
-      {/* Light Gradient Overlay to Maintain Pure White Background Feel */}
-      <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-white/60" />
+      {/* Warm overlays */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[#FAF8F4]/80"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-linear-to-t from-[#FAF8F4] via-[#FAF8F4]/70 to-[#FAF8F4]/45"
+      />
 
-      {/* Centered Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 text-center space-y-4">
-        {/* Page Title in Vibrant Blue */}
-        <h1 className="text-3xl sm:text-5xl font-black text-blue-600 tracking-tight capitalize">
+      {/* Decorative editorial frame */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-5 bottom-5 top-24 border border-white/50 sm:inset-x-8 sm:bottom-8 sm:top-28 lg:inset-x-12"
+      />
+
+      <div className="relative mx-auto w-full max-w-5xl px-6 py-14 text-center sm:py-16 lg:py-20">
+        <div className="mb-5 flex items-center justify-center gap-3">
+          <span className="h-px w-8 bg-[#9D8974]" />
+          <span className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#806B55] sm:text-[10px]">
+            Yifan Bridal & Couture
+          </span>
+          <span className="h-px w-8 bg-[#9D8974]" />
+        </div>
+
+        <h1 className="mx-auto max-w-4xl font-serif text-4xl font-normal leading-tight tracking-tight text-[#211F1C] sm:text-5xl md:text-6xl lg:text-7xl">
           {pageTitle}
         </h1>
 
-        {/* Breadcrumb Navigation Badge */}
+        <div className="mx-auto mt-6 h-px w-12 bg-[#D8C9B8]" />
+
+        {/* Breadcrumb */}
         <nav
-          aria-label="Breadcrumb Navigation"
-          className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full bg-blue-50/90 border border-blue-200/80 text-xs sm:text-sm font-semibold shadow-sm"
+          aria-label="Breadcrumb"
+          className="mt-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-[10px] uppercase tracking-[0.13em] sm:text-[11px]"
         >
           <Link
             href="/"
-            className="flex items-center gap-1.5 text-slate-600 hover:text-blue-600 transition-colors"
+            className="inline-flex items-center gap-2 text-[#625D57] transition-colors hover:text-[#211F1C]"
           >
-            <Home className="w-3.5 h-3.5 text-blue-600" />
+            <Home className="h-3.5 w-3.5" />
             <span>Home</span>
           </Link>
 
           {pathSegments.map((segment, index) => {
             const isLast = index === pathSegments.length - 1;
-            const href = "/" + pathSegments.slice(0, index + 1).join("/");
-            const label = decodeURIComponent(segment)
-              .replace(/-/g, " ")
-              .replace(/\b\w/g, (char) => char.toUpperCase());
+            const href = `/${pathSegments.slice(0, index + 1).join("/")}`;
+            const label = formatSegment(segment);
 
             return (
-              <div key={href} className="flex items-center gap-2">
-                <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+              <div key={href} className="flex min-w-0 items-center gap-2">
+                <ChevronRight className="h-3 w-3 shrink-0 text-[#B5AAA0]" />
 
                 {isLast ? (
-                  <span className="text-blue-600 font-bold max-w-[160px] sm:max-w-xs truncate">
+                  <span
+                    aria-current="page"
+                    className="max-w-45 truncate font-medium text-[#806B55] sm:max-w-xs"
+                  >
                     {label}
                   </span>
                 ) : (
                   <Link
                     href={href}
-                    className="text-slate-600 hover:text-blue-600 transition-colors"
+                    className="text-[#625D57] transition-colors hover:text-[#211F1C]"
                   >
                     {label}
                   </Link>
@@ -99,7 +129,21 @@ export function ConditionalBanner() {
             );
           })}
         </nav>
+
+        <Link
+          href="/products"
+          className="group mt-8 inline-flex items-center gap-2 text-[9px] font-medium uppercase tracking-[0.2em] text-[#51463B] transition-colors hover:text-[#9D8974] sm:text-[10px]"
+        >
+          Explore Our Collection
+          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        </Link>
       </div>
+
+      {/* Bottom border */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-px bg-[#D8C9B8]/80"
+      />
     </section>
   );
 }

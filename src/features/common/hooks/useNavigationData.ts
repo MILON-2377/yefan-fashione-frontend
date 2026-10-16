@@ -37,7 +37,6 @@ export function useNavigationData() {
   // Main navigation items including Products and Reviews
   const mainNavLinks: NavLinkItem[] = [
     { title: dict.nav.home || "Home", href: "/" },
-    { title: dict.nav.products || "Products", href: "/products" },
     { title: dict.nav.links.about || "About Us", href: "/about" },
     { title: dict.nav.reviews || "Reviews", href: "/reviews" },
     { title: dict.nav.links.downloads || "Downloads", href: "/downloads" },

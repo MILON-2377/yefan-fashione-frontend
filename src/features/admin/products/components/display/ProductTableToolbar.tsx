@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Search, Plus, X, SlidersHorizontal, Loader2 } from "lucide-react";
 import { RecordStatus, ProductSortField, SortOrder } from "../../types/display";
 import { useCatalogLookups } from "../../hooks/useCatalogLookups";
+import { ActionButton } from "@/features/common/ui/ActionButton";
+import { useRouter } from "next/navigation";
 
 interface ProductTableToolbarProps {
   search?: string;
@@ -40,6 +42,7 @@ export function ProductTableToolbar({
   onSortChange,
   onClearFilters,
 }: ProductTableToolbarProps) {
+  const router = useRouter();
   const [searchValue, setSearchValue] = useState(search);
   const [prevSearch, setPrevSearch] = useState(search);
 
@@ -69,6 +72,10 @@ export function ProductTableToolbar({
     search || status || categoryId || collectionId || brandId,
   );
 
+  const handleNavigateCreateProductPage = () => {
+    router.push("/admin/catalog/products/new");
+  };
+
   return (
     <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
@@ -95,12 +102,15 @@ export function ProductTableToolbar({
           )}
         </div>
 
-        <Link
-          href="/admin/catalog/products/create"
-          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm shrink-0"
+        <ActionButton
+          type="submit"
+          variant="primary"
+          size="md"
+          icon={Plus}
+          onClick={handleNavigateCreateProductPage}
         >
-          <Plus className="w-4 h-4" /> Add Product
-        </Link>
+          Create Product
+        </ActionButton>
       </div>
 
       <div className="flex flex-wrap items-center gap-2.5 pt-2 border-t border-slate-100 text-xs">

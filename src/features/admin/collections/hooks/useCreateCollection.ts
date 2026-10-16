@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createCollection } from "../api/createCollection";
 import { CollectionFormValues } from "../schemas/collectionSchema";
-import { COLLECTIONS_QUERY_KEY } from "./useCollections";
 import { toast } from "@/features/common/ui/toast/toastStore";
+import { collectionKeys } from "./keys";
 
 export function useCreateCollection() {
     const queryClient = useQueryClient();
@@ -11,7 +11,7 @@ export function useCreateCollection() {
         mutationFn: (payload: CollectionFormValues) => createCollection(payload),
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: COLLECTIONS_QUERY_KEY,
+                queryKey: collectionKeys.all,
                 exact: false,
             });
             toast.success("Collection Created", "New collection added to catalog.");

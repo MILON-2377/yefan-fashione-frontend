@@ -67,8 +67,8 @@ export const dictionaries = {
                 primaryCtaText: "Request Wholesale Quote",
                 primaryCtaLink: "/contact",
                 secondaryCtaText: "Inquiry",
-                secondaryCtaLink: "/downloads",
-                bgImageUrl: "/banner1.jpg",
+                secondaryCtaLink: "/contact",
+                bgImageUrl: "/showroom-hero.png",
                 metrics: [
                     { value: "Est. 2017", label: "Bridal Manufacturer" },
                     { value: "30+", label: "Global Expos" },
@@ -82,11 +82,11 @@ export const dictionaries = {
                 subtitle:
                     "Discover the brand-new 2026 collection featuring signature bridal gowns, including models W2604, W2608, W2609, W2612, W2613, W2615, W5638, W5639, W5641, and W5643.",
                 primaryCtaText: "View YEEFANS Catalog",
-                primaryCtaLink: "/collections/yeefans",
+                primaryCtaLink: "/downloads",
                 secondaryCtaText: "Request Price List",
                 secondaryCtaLink: "/contact",
                 bgImageUrl:
-                    "https://images.unsplash.com/photo-1546804784-896d0dca3800?q=80&w=2070&auto=format&fit=crop",
+                    "/b4.png",
                 metrics: [
                     { value: "10 Styles", label: "2026 Collection" },
                     { value: "60 Days", label: "Sample Lead Time" },
@@ -100,11 +100,11 @@ export const dictionaries = {
                 subtitle:
                     "Featuring timeless vintage aesthetics and elegant designs across 30+ signature styles, including K5368, K5369 (Dance of Time), K5370A (Moonfall), K5375 (Nietzsche Poetry), K5376 (Turandot), and K5892 (Holy Girl).",
                 primaryCtaText: "Explore KissMarch Series",
-                primaryCtaLink: "/collections/kissmarch",
+                primaryCtaLink: "/products",
                 secondaryCtaText: "View All Catalog",
                 secondaryCtaLink: "/downloads",
                 bgImageUrl:
-                    "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop",
+                    "/showroom-hero.png",
                 metrics: [
                     { value: "30+ Models", label: "Vintage Designs" },
                     { value: "6-12 Pcs", label: "Standard MOQ" },
@@ -118,11 +118,11 @@ export const dictionaries = {
                 subtitle:
                     "Classic French vintage chic blended with quiet afternoon charm and intricate floral details. Showcasing 16 curated designs including S5387, S5388, S5392, S6383, S6901 (Lolita), and S6906 (Green Rose).",
                 primaryCtaText: "Explore Soiowar Collection",
-                primaryCtaLink: "/collections/soiowar",
+                primaryCtaLink: "/downloads",
                 secondaryCtaText: "Request Fabric Swatches",
                 secondaryCtaLink: "/contact",
                 bgImageUrl:
-                    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop",
+                    "/b5.png",
                 metrics: [
                     { value: "16 Styles", label: "Chapter 1 Lineup" },
                     { value: "Velvet", label: "Premium Fabrics" },
@@ -136,11 +136,11 @@ export const dictionaries = {
                 subtitle:
                     "Scaled volume discounts from 3% up to 15% off bulk orders, along with dedicated picture sampling, custom sizing, fabric changes, and full private label production.",
                 primaryCtaText: "View Wholesale Policy",
-                primaryCtaLink: "/wholesale-policy",
+                primaryCtaLink: "/downloads",
                 secondaryCtaText: "Start Custom Order",
-                secondaryCtaLink: "/custom-order",
+                secondaryCtaLink: "/contact",
                 bgImageUrl:
-                    "https://images.unsplash.com/photo-1581092335397-9583fe92d232?q=80&w=2070&auto=format&fit=crop",
+                    "/b2.png",
                 metrics: [
                     { value: "Up to 15%", label: "Bulk Tier Discount" },
                     { value: "90 Days", label: "Bulk Lead Time" },
@@ -152,20 +152,22 @@ export const dictionaries = {
             tagline: "Guangzhou Yifan Trading",
             heading: "Why Partner With Yifan Bridal & Couture",
             subheading:
-                "Delivering high-end French retro couture and bridal fashion to global distributors, boutiques, and private labels.",
+                "Delivering refined French-inspired couture and bridal fashion to global distributors, boutiques, and private labels.",
             oemTitle: "OEM / ODM & Custom Design",
             oemDesc:
-                "Full picture-to-sample customization, bespoke sizing, and custom fabric adjustments tailored for boutique private labels.",
-            wholesaleTitle: "Flexible Tiered Wholesale",
+                "From reference images to sample development, we support custom designs, tailored sizing, and fabric adjustments for boutique and private-label collections.",
+            wholesaleTitle: "Flexible Wholesale Solutions",
             wholesaleDesc:
-                "Scalable order tiers from standard 1-piece sampling up to 100+ bulk production with competitive volume pricing.",
+                "Flexible ordering options, from single-piece samples to bulk production of 100+ pieces, with competitive pricing based on order volume.",
             craftsmanshipTitle: "Signature Couture Craftsmanship",
             craftsmanshipDesc:
-                "Featuring French retro aesthetics, intricate floral lace embroidery, velvet detailing, and premium bridal fabrics.",
-            leadTimeTitle: "Transparent Lead Times",
+                "Discover French-inspired vintage elegance, intricate floral lace, delicate embroidery, velvet accents, and carefully selected bridal fabrics.",
+            leadTimeTitle: "Clear Production Timelines",
             leadTimeDesc:
-                "Standardized 60 to 90-day production scheduling with expedited rush-order capabilities for time-sensitive seasons.",
+                "Plan your collections with transparent production schedules, typically 60–90 days, with expedited options subject to order requirements and production capacity.",
+            primaryCta: "Work With Us",
         },
+
 
         categorySection: {
             noData: "No product categories available at this moment.",
@@ -214,18 +216,75 @@ export const dictionaries = {
                     description: "Standardized 60 to 90-day production scheduling with expedited rush-order capabilities for time-sensitive seasons.",
                 },
             ],
+            primaryCta: "Work With Us",
         },
 
+
         featuredProducts: {
-            tagline: "Top Catalog Picks",
-            heading: "Featured Products",
+            tagline: "Curated for Your Collection",
+            heading: "Featured Collections",
+            subheading:
+                "Explore our carefully selected bridal and couture designs, created for boutiques, distributors, and private-label brands.",
             prevProduct: "Previous product",
             nextProduct: "Next product",
             noProducts: "No featured products available at this moment.",
             viewDetails: "View Details",
             inquire: "Inquire",
             codeLabel: "CODE:",
+            viewAll: "Explore All Collections",
         },
+
+        atelierGallerySection: {
+            tagline: "Inside the Atelier",
+            heading: "The Art of Bridal & Couture",
+            subheading:
+                "Discover the silhouettes, textures, and intricate details behind our bridal and couture collections, designed for boutiques and fashion businesses.",
+            imageLabel: "LOOK",
+            imageTitles: [
+                "Bridal Elegance",
+                "Intricate Details",
+                "Couture Craftsmanship",
+                "Timeless Silhouettes",
+            ],
+            footerNote:
+                "Looking for something specific? Explore our catalog or contact us to discuss your collection requirements.",
+            primaryCta: "Explore All Collections",
+        },
+
+        howWeWorkSection: {
+            tagline: "From Concept to Delivery",
+            heading: "A Clear Process. A Trusted Partnership.",
+            subheading:
+                "From the first design discussion to final delivery, we work with you through each stage to help bring your collection to life.",
+            stepLabel: "STEP",
+            steps: [
+                {
+                    title: "Share Your Requirements",
+                    description:
+                        "Tell us about your target styles, quantities, fabrics, sizing, and business needs. Share reference images or explore our existing catalog.",
+                },
+                {
+                    title: "Sampling & Customization",
+                    description:
+                        "Review sample options and discuss design details, fabric choices, sizing adjustments, and private-label requirements before production.",
+                },
+                {
+                    title: "Production & Quality Checks",
+                    description:
+                        "Once the specifications are confirmed, production follows the agreed requirements, with quality checks throughout the manufacturing process.",
+                },
+                {
+                    title: "Finalization & Delivery",
+                    description:
+                        "After final checks, your order is prepared for shipment. Delivery arrangements and timelines are confirmed according to your order and destination.",
+                },
+            ],
+            primaryCta: "Discuss Your Project",
+            footerNote:
+                "Every collection is different. Sampling, customization, minimum quantities, and production timelines are confirmed based on your requirements.",
+            secondaryCta: "Explore Our Catalog",
+        },
+
 
         aboutSection: {
             badge: "Excellence in Craftsmanship",
@@ -269,6 +328,9 @@ export const dictionaries = {
             satisfiedPartners: "99% Satisfied Export Partners",
             noReviews: "No client reviews available at this moment.",
             productLabel: "Product:",
+            footerNote:
+                "We value every partnership. Explore our collections or get in touch to discuss your wholesale, customization, and private-label requirements.",
+            primaryCta: "Discuss a Partnership",
         },
 
         footer: {
@@ -575,36 +637,57 @@ export const dictionaries = {
             inquire: "Inquire",
         },
 
+
         faqChat: {
             title: "Ask Yifan AI",
             ragBadge: "RAG Active",
-            subheading: "Instant answers powered by our 2026 product knowledge base",
-            initialGreeting: "Hello! I am Yifan Atelier's AI Assistant. You can ask me anything about our 2026 dress collections, fabric specifications, OEM manufacturing process, MOQs, or shipping schedules.",
-            resetChatTitle: "Reset Chat",
-            resetGreeting: "Chat reset. How else can I assist your boutique or brand today?",
-            searchingText: "Searching catalog specifications & policy docs...",
-            suggestionsLabel: "Suggestions:",
-            inputPlaceholder: "Ask AI about dresses, fabrics, MOQs, or lead times...",
-            errorMessage: "Failed to connect to AI Assistant. Please try again.",
+            subheading: "Answers from our product knowledge base",
+
+            initialGreeting:
+                "Welcome to Yifan Atelier. I'm your AI assistant, here to help you explore our collections and manufacturing services. Ask me about dress styles, fabric specifications, OEM and ODM production, minimum order quantities, or shipping timelines.",
+
+            resetChatTitle: "Reset conversation",
+            resetGreeting:
+                "Your conversation has been reset. How can I help with your next collection?",
+
+            searchingText: "Looking through our catalogs and product information...",
+
+            suggestionsLabel: "Explore",
+            inputPlaceholder:
+                "Ask about collections, fabrics, MOQs, or production timelines...",
+
+            errorMessage:
+                "We're unable to connect to the AI assistant right now. Please try again in a moment.",
+
+            copyText: "Copy",
+            copiedText: "Copied",
+            copyErrorMessage:
+                "Unable to copy this response. Please try again.",
+
             quickPrompts: [
                 {
-                    label: "What is your Minimum Order Quantity (MOQ)?",
-                    query: "What is the Minimum Order Quantity (MOQ) for custom OEM evening gowns and ready-to-ship stock?",
+                    label: "Minimum order quantities",
+                    query:
+                        "What are your minimum order quantities for custom OEM evening gowns and ready-to-ship dresses?",
                 },
                 {
-                    label: "How long does custom sampling take?",
-                    query: "What is the turnaround time for sample development and pattern making?",
+                    label: "Custom sampling",
+                    query:
+                        "How long does sample development take, including pattern making and sample revisions?",
                 },
                 {
-                    label: "What fabrics and materials do you stock?",
-                    query: "Do you supply OEKO-TEX certified mulberry silk, stretch satins, and French lace?",
+                    label: "Fabrics & materials",
+                    query:
+                        "What fabrics and materials do you offer for evening gowns, including mulberry silk, stretch satin, and French lace? Please clarify which certifications are available.",
                 },
                 {
-                    label: "What are your payment terms for bulk orders?",
-                    query: "What payment methods and deposit structures do you accept for bulk manufacturing?",
+                    label: "Bulk order payments",
+                    query:
+                        "What payment methods, deposit requirements, and balance payment terms do you offer for bulk manufacturing orders?",
                 },
             ],
         },
+
 
         reviewForm: {
             badge: "Client Testimonials",
@@ -806,24 +889,27 @@ export const dictionaries = {
                 ],
             },
         ],
-        advantages: {
-            tagline: "广州一帆贸易有限公司",
-            heading: "为什么选择一帆婚纱与高定礼服",
+        advantagesZh: {
+            tagline: "广州伊凡贸易",
+            heading: "为什么选择与 Yifan Bridal & Couture 合作",
             subheading:
-                "为全球分销商、精品店和自主品牌提供高端法式复古与婚纱时尚源头制造支持。",
-            oemTitle: "OEM / ODM 看图打样",
+                "为全球批发商、精品买手店及自有品牌客户提供精致的法式复古风格高级女装与婚纱礼服。",
+            oemTitle: "OEM / ODM 与个性化设计",
             oemDesc:
-                "支持看图打样、定制尺寸及面料调整，专为精品店及自主品牌量身打造。",
-            wholesaleTitle: "阶梯式灵活批发",
+                "从参考图片到样衣开发，我们支持款式定制、尺寸调整及面料修改，满足精品店与自有品牌系列的个性化需求。",
+            wholesaleTitle: "灵活的批发方案",
             wholesaleDesc:
-                "支持1件起样样衣制作至100+件大货批量生产，享有阶梯式优惠批价。",
-            craftsmanshipTitle: "匠心高定工艺",
+                "提供灵活的订购选择，从单件样品到 100 件以上的批量生产，并根据订单数量提供具有竞争力的价格。",
+            craftsmanshipTitle: "精致的高级定制工艺",
             craftsmanshipDesc:
-                "延续法式复古美学，精选精致蕾丝、刺绣花卉与丝绒面料，打磨高品质细节。",
-            leadTimeTitle: "透明交期保证",
+                "融合优雅的法式复古美学、精致的花卉蕾丝、细腻的刺绣、丝绒细节及精心挑选的婚纱面料。",
+            leadTimeTitle: "清晰透明的生产周期",
             leadTimeDesc:
-                "标准60至90天生产周期，提供加急生产通道，保障旺季按时交付。",
+                "提供透明的生产计划，常规生产周期通常为 60–90 天；加急订单需根据订单要求及实际生产能力确认。",
+
+            primaryCta: "与我们合作",
         },
+
         categorySection: {
             noData: "暂无可用产品品类。",
             errorMsg: "加载品类失败，请稍后重试。",
@@ -871,17 +957,72 @@ export const dictionaries = {
                     description: "标准60-90天大货生产周期，并提供旺季紧急加急打样与生产服务支持。",
                 },
             ],
+            primaryCta: "与我们合作",
         },
 
         featuredProducts: {
-            tagline: "目录精选款式",
-            heading: "特色推荐产品",
+            tagline: "精选系列，为您的品牌甄选",
+            heading: "精选推荐系列",
+            subheading:
+                "探索我们精心甄选的婚纱与高级女装设计，为精品买手店、批发商及自有品牌客户提供灵感与选择。",
             prevProduct: "上一件产品",
             nextProduct: "下一件产品",
             noProducts: "暂无可用的推荐产品。",
             viewDetails: "查看详情",
             inquire: "在线询价",
-            codeLabel: "编号:",
+            codeLabel: "编号：",
+            viewAll: "探索全部系列",
+        },
+
+        atelierGallerySection: {
+            tagline: "走进设计工坊",
+            heading: "婚纱与高级女装的艺术",
+            subheading:
+                "探索婚纱与高级女装系列的优雅廓形、丰富质感与精致细节，为精品买手店及时尚品牌寻找灵感。",
+            imageLabel: "精选",
+            imageTitles: [
+                "优雅婚纱",
+                "精致细节",
+                "高级定制工艺",
+                "经典优雅廓形",
+            ],
+            footerNote:
+                "正在寻找适合您品牌的款式？欢迎浏览产品目录，或联系我们沟通您的系列需求。",
+            primaryCta: "探索全部系列",
+        },
+
+        howWeWorkSection: {
+            tagline: "从创意构想到成品交付",
+            heading: "流程清晰，合作安心",
+            subheading:
+                "从最初的设计沟通到最终交付，我们与您携手推进每个环节，助力打造符合品牌定位的专属系列。",
+            stepLabel: "步骤",
+            steps: [
+                {
+                    title: "沟通需求",
+                    description:
+                        "告诉我们您的目标款式、订购数量、面料、尺码及业务需求。您可以提供参考图片，也可以从现有产品目录中挑选款式。",
+                },
+                {
+                    title: "样品开发与定制",
+                    description:
+                        "确认样品方案，并沟通设计细节、面料选择、尺码调整及自有品牌需求，为后续生产做好准备。",
+                },
+                {
+                    title: "生产与质量检查",
+                    description:
+                        "确认产品规格后，按照双方约定的要求安排生产，并在制造过程中进行相应的质量检查。",
+                },
+                {
+                    title: "最终确认与交付",
+                    description:
+                        "完成最终检查后，安排订单出货。具体交付方式与时间将根据订单要求及目的地确认。",
+                },
+            ],
+            primaryCta: "洽谈合作需求",
+            footerNote:
+                "每个系列都有不同的需求。样品开发、定制方案、起订数量及生产周期将根据具体要求协商确认。",
+            secondaryCta: "探索全部产品",
         },
 
 
@@ -928,6 +1069,9 @@ export const dictionaries = {
             satisfiedPartners: "99% 满意度的出口合作伙伴",
             noReviews: "暂无客户评价。",
             productLabel: "对应产品:",
+            footerNote:
+                "我们珍视每一次合作。欢迎浏览产品系列，或联系我们，洽谈批发采购、个性化定制及自有品牌合作需求。",
+            primaryCta: "洽谈合作",
         },
 
         footer: {
@@ -1234,36 +1378,57 @@ export const dictionaries = {
         },
 
 
+
         faqChat: {
             title: "咨询一帆 AI 助手",
             ragBadge: "RAG 知识库已启用",
-            subheading: "基于 2026 礼服产品知识库为您提供即时解答",
-            initialGreeting: "您好！我是广州一帆高定工坊的 AI 智能助手。关于 2026 时尚造型册、面料规格、OEM 代工流程、起订量 (MOQ) 或国际物流，您可以随时向我提问。",
+            subheading: "基于产品知识库，为您提供专业解答",
+
+            initialGreeting:
+                "您好！欢迎来到广州一帆高定工坊。我是您的 AI 助手，很高兴为您服务。您可以向我咨询礼服系列、面料规格、OEM/ODM 代工流程、最低起订量（MOQ）、打样周期及国际物流等相关信息。",
+
             resetChatTitle: "重置对话",
-            resetGreeting: "对话已重置。今天还有什么我可以协助您的品牌或精品店的吗？",
-            searchingText: "正在检索产品规格图册与工厂政策文件...",
-            suggestionsLabel: "常见提问推荐:",
-            inputPlaceholder: "向 AI 询问礼服款式、面料、MOQ 或打样周期...",
-            errorMessage: "无法连接到 AI 助手，请重试。",
+            resetGreeting:
+                "对话已重置。请问接下来有什么可以协助您的？",
+
+            searchingText: "正在检索产品图册、面料规格与相关政策文件...",
+
+            suggestionsLabel: "您可能想了解",
+            inputPlaceholder:
+                "询问礼服系列、面料、起订量或生产周期...",
+
+            errorMessage:
+                "暂时无法连接 AI 助手，请稍后重试。",
+
+            copyText: "复制",
+            copiedText: "已复制",
+            copyErrorMessage:
+                "复制失败，请重试。",
+
             quickPrompts: [
                 {
-                    label: "定制与现货的起订量 (MOQ) 是多少？",
-                    query: "定制 OEM 晚礼服与现货精品款式的最低起订量 (MOQ) 分别是多少？",
+                    label: "了解最低起订量",
+                    query:
+                        "请问定制 OEM 晚礼服与现货礼服的最低起订量（MOQ）分别是多少？",
                 },
                 {
-                    label: "打样与制版需要多长时间？",
-                    query: "版型开发与样衣制作的具体周期和加急选项是什么？",
+                    label: "了解打样与制版周期",
+                    query:
+                        "请介绍版型开发、样衣制作及样品修改所需的时间，是否提供加急服务？",
                 },
                 {
-                    label: "工坊常备哪些高端面料与材质？",
-                    query: "你们是否提供 OEKO-TEX 认证桑蚕丝、重磅弹力缎及法国蕾丝？",
+                    label: "了解面料与材质",
+                    query:
+                        "请介绍工坊可提供的礼服面料，例如桑蚕丝、弹力缎和法国蕾丝，并说明相关认证是否适用。",
                 },
                 {
-                    label: "大货生产的付款方式与定金比例是什么？",
-                    query: "针对大货批量生产，你们接受哪些付款方式与定金结构？",
+                    label: "了解大货付款条件",
+                    query:
+                        "请问大货生产支持哪些付款方式？定金比例、尾款支付时间及相关付款条件是什么？",
                 },
             ],
         },
+
 
         reviewForm: {
             badge: "客户评价",

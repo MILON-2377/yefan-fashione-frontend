@@ -1,3 +1,4 @@
+
 "use client";
 
 import { CategoryCarousel } from "./CategoryCarousel";
@@ -12,12 +13,12 @@ export function CategorySection() {
   const categories = data?.items ?? [];
 
   return (
-    <section className="py-16 bg-slate-50 border-y border-slate-200/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+    <section className="border-y border-[#E7E1D9] bg-[#FAF8F4] py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
         {isLoading ? (
           <CategorySkeleton />
         ) : isError || categories.length === 0 ? (
-          <div className="py-12 text-center text-xs text-slate-500 font-mono">
+          <div className="py-12 text-center text-sm text-[#625D57]">
             {dict.categorySection?.noData ??
               "No product categories available at this moment."}
           </div>
@@ -31,14 +32,18 @@ export function CategorySection() {
 
 function CategorySkeleton() {
   return (
-    <div className="space-y-8 animate-pulse">
-      <div className="space-y-2">
-        <div className="h-4 w-28 bg-slate-200 rounded" />
-        <div className="h-8 w-64 bg-slate-300 rounded" />
+    <div className="animate-pulse space-y-8">
+      <div className="space-y-3">
+        <div className="h-3 w-28 rounded bg-[#E7E1D9]" />
+        <div className="h-8 w-64 rounded bg-[#E7E1D9]" />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="h-64 bg-slate-200 rounded-xl" />
+          <div
+            key={i}
+            className="h-64 rounded-lg bg-[#F0ECE6]"
+          />
         ))}
       </div>
     </div>

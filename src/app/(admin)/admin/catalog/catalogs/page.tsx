@@ -20,59 +20,37 @@ import {
 } from "lucide-react";
 
 import { useCatalogs } from "@/features/admin/catalogs/hooks/useCatalogs";
-import { AdminCatalogItem,  } from "@/features/admin/catalogs/types/catalogTypes";
+import { AdminCatalogItem } from "@/features/admin/catalogs/types/catalogTypes";
 import { RecordStatus } from "@/features/admin/brands/types";
 import { useDeleteCatalog } from "@/features/admin/catalogs/hooks/useDeleteCatalog";
 import { DeleteConfirmationModal } from "@/features/common/ui/DeleteConfirmationModal";
-import ChangeStatusModal from "@/features/admin/catalogs/components/UpdateCatalogsStatusModal";
 import { ActionButton } from "@/features/common/ui/ActionButton";
-import { useUpdateCatalogStatus } from "@/features/admin/catalogs/hooks/useUpdateCatalogStatus";
 
 export default function CatalogsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<RecordStatus | "ALL">("ALL");
 
-  // Deletion & Status Modal state
-  const [catalogToDelete, setCatalogToDelete] = useState<AdminCatalogItem | null>(null);
-  const [catalogToUpdateStatus, setCatalogToUpdateStatus] =
+  const [catalogToDelete, setCatalogToDelete] =
     useState<AdminCatalogItem | null>(null);
 
-  // Queries & Mutations
   const { data, isLoading, isError, error, refetch } = useCatalogs({
     search: searchTerm,
     status: statusFilter,
   });
 
-  const { mutateAsync: executeDelete, isPending: isDeleting } = useDeleteCatalog();
-  const { mutateAsync: executeStatusUpdate, isPending: isUpdatingStatus } =
-    useUpdateCatalogStatus();
+  const { mutateAsync: executeDelete, isPending: isDeleting } =
+    useDeleteCatalog();
 
   const catalogs = data?.items ?? [];
 
   const handleConfirmDelete = async () => {
     if (!catalogToDelete) return;
-
     try {
       await executeDelete(catalogToDelete.id);
     } catch (err) {
       console.error("Failed to delete catalog:", err);
     } finally {
       setCatalogToDelete(null);
-    }
-  };
-
-  const handleConfirmStatusChange = async (newStatus: RecordStatus) => {
-    if (!catalogToUpdateStatus) return;
-
-    try {
-      await executeStatusUpdate({
-        id: catalogToUpdateStatus.id,
-        status: newStatus,
-      });
-    } catch (err) {
-      console.error("Failed to update status:", err);
-    } finally {
-      setCatalogToUpdateStatus(null);
     }
   };
 
@@ -104,7 +82,6 @@ export default function CatalogsPage() {
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-12">
-      {/* Confirmation Delete Modal */}
       <DeleteConfirmationModal
         isOpen={Boolean(catalogToDelete)}
         isPending={isDeleting}
@@ -112,16 +89,6 @@ export default function CatalogsPage() {
         entityName={catalogToDelete?.title}
         onConfirm={handleConfirmDelete}
         onClose={() => setCatalogToDelete(null)}
-      />
-
-      {/* Quick Change Status Modal (Key prop resets internal state on selection change) */}
-      <ChangeStatusModal
-        key={catalogToUpdateStatus?.id}
-        isOpen={Boolean(catalogToUpdateStatus)}
-        isPending={isUpdatingStatus}
-        catalog={catalogToUpdateStatus}
-        onConfirm={handleConfirmStatusChange}
-        onClose={() => setCatalogToUpdateStatus(null)}
       />
 
       {/* Page Header */}
@@ -136,7 +103,7 @@ export default function CatalogsPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Link href="/admin/catalog/catalogs/new">
+          <Link href="/admin/catalogs/new">
             <ActionButton variant="primary" size="md" icon={Plus}>
               Create Catalog
             </ActionButton>
@@ -241,7 +208,7 @@ export default function CatalogsPage() {
                           </div>
                           <div>
                             <Link
-                              href={`/admin/catalog/catalogs/${catalog.id}`}
+                              href={`/admin/catalogs/${catalog.id}`}
                               className="font-semibold text-slate-900 hover:text-amber-700 transition-colors block"
                             >
                               {catalog.title}
@@ -273,7 +240,7 @@ export default function CatalogsPage() {
                           </a>
                         ) : (
                           <span className="text-xs font-mono text-slate-400">
-                            {catalog.pdf_media_asset_id.slice(0, 8)}...
+                            {catalog.pdf_media_asset_id?.slice(0, 8)}...
                           </span>
                         )}
                       </td>
@@ -288,16 +255,14 @@ export default function CatalogsPage() {
 
                       <td className="py-4 px-6 text-right">
                         <div className="flex items-center justify-end gap-1.5 opacity-90 group-hover:opacity-100">
-                          {/* Quick Change Status Trigger */}
-                          <button
-                            title="Change Status"
-                            onClick={() => setCatalogToUpdateStatus(catalog)}
+                          <Link
+                            href={`/admin/catalog/catalogs/${catalog.id}`}
+                            title="Edit Catalog"
                             className="p-1.5 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
                           >
                             <Edit2 className="w-4 h-4" />
-                          </button>
+                          </Link>
 
-                          {/* Delete Modal Trigger */}
                           <button
                             title="Delete Catalog"
                             disabled={isDeleting}
@@ -316,7 +281,6 @@ export default function CatalogsPage() {
           </div>
         </div>
       ) : (
-        /* Empty State */
         <div className="bg-white rounded-xl border border-slate-200 p-12 text-center space-y-4 shadow-sm">
           <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
             <BookOpen className="w-6 h-6 stroke-[1.5]" />

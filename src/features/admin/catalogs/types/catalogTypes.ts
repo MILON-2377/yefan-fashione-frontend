@@ -77,7 +77,7 @@ export interface CreateCatalogRequest {
 export interface UpdateCatalogRequest {
   title?: string;
   status?: RecordStatus;
-  pdf_media_asset_id?: string;
+  pdf_media_asset_id?: string | null;
   description?: string | null;
   collection_id?: string | null;
   cover_media_asset_id?: string | null;
@@ -94,7 +94,13 @@ export interface CatalogFormValues {
   collection_id?: string | null;
   cover_media_asset_id?: string | null;
 
-  // React Hook Form / Local Media Uploader Attachments
   uploadedPdf?: UploadedMediaResult | null;
   uploadedCover?: UploadedMediaResult | null;
+}
+
+
+
+export interface DeleteCatalogResponse {
+  success: boolean;
+  message: string;
 }

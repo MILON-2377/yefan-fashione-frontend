@@ -1,8 +1,8 @@
 import { adminFetch } from "@/api";
+import { DeleteCatalogResponse } from "../types/catalogTypes";
 
-
-export const deleteCatalog = async (id: string): Promise<void> => {
-  return adminFetch(`/catalogs/${id}`, {
+export async function deleteCatalog(id: string): Promise<DeleteCatalogResponse> {
+  return adminFetch<DeleteCatalogResponse>(`/catalogs/${id}`, {
     method: "DELETE",
   });
-};
+}

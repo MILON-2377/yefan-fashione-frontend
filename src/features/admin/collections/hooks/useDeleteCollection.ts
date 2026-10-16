@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCollection } from "../api/deleteCollection";
-import { COLLECTIONS_QUERY_KEY } from "./useCollections";
 import { toast } from "@/features/common/ui/toast/toastStore";
+import { collectionKeys } from "./keys";
 
 export function useDeleteCollection() {
     const queryClient = useQueryClient();
@@ -10,7 +10,7 @@ export function useDeleteCollection() {
         mutationFn: (id: string) => deleteCollection(id),
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: COLLECTIONS_QUERY_KEY,
+                queryKey: collectionKeys.all,
                 exact: false,
             });
             toast.success("Collection Deleted", "The collection was removed successfully.");

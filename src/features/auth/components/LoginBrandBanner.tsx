@@ -1,29 +1,44 @@
-import { Layers, Clock } from "lucide-react";
+import { Lock, ShieldCheck } from "lucide-react";
+
+
 
 export function LoginBrandBanner() {
   return (
-    <div className="w-full bg-slate-900 text-slate-200 px-4 py-2.5 text-xs">
-      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-mono uppercase text-[10px] tracking-wider text-slate-400">
-            SS26 Production Runs Active
+    <div className="w-full border-b border-[#51463B] bg-[#211F1C] px-4 py-2.5 text-[#FAF8F4]">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-2">
+        {/* Admin System Status */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="relative flex h-2 w-2 shrink-0">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#B5A18B] opacity-50" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#B5A18B]" />
           </span>
-          <span className="text-slate-600 hidden sm:inline">•</span>
-          <span className="hidden sm:inline text-slate-300">
-            Guangzhou Facility Operating at Full Capacity
+
+          <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#D8C9B8]">
+            Administration Portal
+          </span>
+
+          <span className="mx-1 hidden text-[#625D57] sm:inline">/</span>
+
+          <span className="hidden text-[11px] text-[#C7BEB3] sm:inline">
+            Authorized Personnel Only
           </span>
         </div>
 
-        <div className="flex items-center gap-4 font-mono text-[10px] uppercase tracking-wider text-slate-400">
-          <span className="flex items-center gap-1">
-            <Clock className="w-3 h-3 text-blue-400" /> 24h Sample turnaround
+        {/* Security & Access Information */}
+        <div className="flex items-center gap-4 sm:gap-5">
+          <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.12em] text-[#D8C9B8]">
+            <ShieldCheck className="h-3.5 w-3.5 text-[#B5A18B]" />
+            <span>Secure Admin Access</span>
           </span>
-          <span className="hidden md:flex items-center gap-1">
-            <Layers className="w-3 h-3 text-blue-400" /> Custom Tech-Packs
+
+          <span className="hidden items-center gap-1.5 text-[10px] uppercase tracking-[0.12em] text-[#D8C9B8] md:flex">
+            <Lock className="h-3.5 w-3.5 text-[#B5A18B]" />
+            <span>Restricted Area</span>
           </span>
         </div>
       </div>
     </div>
   );
 }
+
+

@@ -38,122 +38,166 @@ export function FilterContent({
       : content.fallbackCollections || [];
 
   return (
-    <div className="space-y-6">
-      {/* Header Bar */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-200">
-        <h3 className="text-sm font-bold text-slate-900 tracking-tight">
-          {content.title}
-        </h3>
+    <div className="space-y-7">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-[#E7E1D9] pb-4">
+        <div>
+          <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#9D8974]">
+            Collection Preferences
+          </span>
+          <h3 className="mt-1 font-serif text-xl font-normal tracking-tight text-[#211F1C]">
+            {content.title}
+          </h3>
+        </div>
+
         {onCloseMobile && (
           <AppButton
             type="button"
             onClick={onCloseMobile}
-            className="p-1 text-slate-400 hover:text-slate-600 rounded-lg sm:hidden"
+            variant="secondary"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#E7E1D9] bg-white p-0 text-[#625D57] shadow-none transition-colors hover:bg-[#F0ECE6] hover:text-[#211F1C] sm:hidden"
             aria-label="Close filters"
           >
-            <X className="w-5 h-5" />
+            <X className="h-4 w-4" />
           </AppButton>
         )}
       </div>
 
-      {/* Categories Filter Section */}
-      <div className="space-y-3">
-        <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-          <Layers className="w-3.5 h-3.5 text-blue-600" />
-          <span>{content.categories}</span>
-        </label>
+      {/* Categories */}
+      <section className="space-y-4">
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#E7E1D9] bg-white text-[#806B55]">
+            <Layers className="h-4 w-4" />
+          </span>
+
+          <div>
+            <h4 className="text-xs font-semibold uppercase tracking-[0.13em] text-[#211F1C]">
+              {content.categories}
+            </h4>
+            <p className="mt-0.5 text-[11px] text-[#9D8974]">
+              Browse by product category
+            </p>
+          </div>
+        </div>
+
         <div className="space-y-1">
           <button
             type="button"
             onClick={() => onSelectCategory("")}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
+            className={`group flex w-full items-center justify-between gap-3 rounded-lg border px-3.5 py-3 text-left text-xs transition-all duration-200 ${
               selectedCategory === ""
-                ? "bg-blue-50 text-blue-700 border border-blue-200"
-                : "text-slate-600 hover:bg-slate-100"
+                ? "border-[#D8C9B8] bg-white font-medium text-[#211F1C]"
+                : "border-transparent text-[#625D57] hover:border-[#E7E1D9] hover:bg-white"
             }`}
           >
             <span>{content.allCategories}</span>
             {selectedCategory === "" && (
-              <Check className="w-3.5 h-3.5 text-blue-600" />
+              <Check className="h-4 w-4 shrink-0 text-[#806B55]" />
             )}
           </button>
 
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              onClick={() => onSelectCategory(cat.id)}
-              className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
-                selectedCategory === cat.id
-                  ? "bg-blue-50 text-blue-700 border border-blue-200"
-                  : "text-slate-600 hover:bg-slate-100"
-              }`}
-            >
-              <span className="truncate">{cat.name}</span>
-              {selectedCategory === cat.id && (
-                <Check className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
+          {categories.map((cat) => {
+            const isActive = selectedCategory === cat.id;
 
-      {/* Collections Filter Section */}
-      <div className="space-y-3 pt-4 border-t border-slate-100">
-        <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-          <span>{content.collections}</span>
-        </label>
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => onSelectCategory(cat.id)}
+                aria-pressed={isActive}
+                className={`group flex w-full items-center justify-between gap-3 rounded-lg border px-3.5 py-3 text-left text-xs transition-all duration-200 ${
+                  isActive
+                    ? "border-[#D8C9B8] bg-white font-medium text-[#211F1C]"
+                    : "border-transparent text-[#625D57] hover:border-[#E7E1D9] hover:bg-white"
+                }`}
+              >
+                <span className="truncate">{cat.name}</span>
+                {isActive && (
+                  <Check className="h-4 w-4 shrink-0 text-[#806B55]" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Collections */}
+      <section className="space-y-4 border-t border-[#E7E1D9] pt-6">
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#E7E1D9] bg-white text-[#806B55]">
+            <Sparkles className="h-4 w-4" />
+          </span>
+
+          <div>
+            <h4 className="text-xs font-semibold uppercase tracking-[0.13em] text-[#211F1C]">
+              {content.collections}
+            </h4>
+            <p className="mt-0.5 text-[11px] text-[#9D8974]">
+              Discover curated designs
+            </p>
+          </div>
+        </div>
+
         <div className="space-y-1">
           <button
             type="button"
             onClick={() => onSelectCollection("")}
-            className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
+            aria-pressed={selectedCollection === ""}
+            className={`group flex w-full items-center justify-between gap-3 rounded-lg border px-3.5 py-3 text-left text-xs transition-all duration-200 ${
               selectedCollection === ""
-                ? "bg-blue-50 text-blue-700 border border-blue-200"
-                : "text-slate-600 hover:bg-slate-100"
+                ? "border-[#D8C9B8] bg-white font-medium text-[#211F1C]"
+                : "border-transparent text-[#625D57] hover:border-[#E7E1D9] hover:bg-white"
             }`}
           >
             <span>{content.allCollections}</span>
             {selectedCollection === "" && (
-              <Check className="w-3.5 h-3.5 text-blue-600" />
+              <Check className="h-4 w-4 shrink-0 text-[#806B55]" />
             )}
           </button>
 
           {isLoadingCollections ? (
-            <p className="text-[11px] text-slate-400 italic px-3 py-1">
-              {content.loadingCollections}
-            </p>
+            <div className="space-y-3 px-3.5 py-4">
+              <div className="h-3 w-2/3 animate-pulse rounded bg-[#E7E1D9]" />
+              <div className="h-3 w-4/5 animate-pulse rounded bg-[#E7E1D9]" />
+              <p className="text-[11px] text-[#9D8974]">
+                {content.loadingCollections}
+              </p>
+            </div>
           ) : (
-            collectionsList.map((col) => (
-              <button
-                key={col.id}
-                type="button"
-                onClick={() => onSelectCollection(col.id)}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
-                  selectedCollection === col.id
-                    ? "bg-blue-50 text-blue-700 border border-blue-200"
-                    : "text-slate-600 hover:bg-slate-100"
-                }`}
-              >
-                <span className="truncate">{col.name}</span>
-                {selectedCollection === col.id && (
-                  <Check className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                )}
-              </button>
-            ))
+            collectionsList.map((col) => {
+              const isActive = selectedCollection === col.id;
+
+              return (
+                <button
+                  key={col.id}
+                  type="button"
+                  onClick={() => onSelectCollection(col.id)}
+                  aria-pressed={isActive}
+                  className={`group flex w-full items-center justify-between gap-3 rounded-lg border px-3.5 py-3 text-left text-xs transition-all duration-200 ${
+                    isActive
+                      ? "border-[#D8C9B8] bg-white font-medium text-[#211F1C]"
+                      : "border-transparent text-[#625D57] hover:border-[#E7E1D9] hover:bg-white"
+                  }`}
+                >
+                  <span className="truncate">{col.name}</span>
+                  {isActive && (
+                    <Check className="h-4 w-4 shrink-0 text-[#806B55]" />
+                  )}
+                </button>
+              );
+            })
           )}
         </div>
-      </div>
+      </section>
 
-      {/* Reset Action */}
-      <div className="pt-2">
+      {/* Reset Filters */}
+      <div className="border-t border-[#E7E1D9] pt-5">
         <AppButton
           type="button"
           onClick={onReset}
           variant="secondary"
-          leftIcon={<RotateCcw className="w-3.5 h-3.5" />}
-          className="w-full justify-center border border-slate-200 hover:border-slate-300 text-slate-600 text-xs font-semibold hover:bg-slate-50 transition shadow-xs"
+          leftIcon={<RotateCcw className="h-3.5 w-3.5" />}
+          className="h-11 w-full justify-center rounded-full border border-[#D8C9B8] bg-transparent text-xs font-medium text-[#625D57] shadow-none transition-all duration-300 hover:border-[#211F1C] hover:bg-white hover:text-[#211F1C]"
         >
           {content.resetFilters}
         </AppButton>

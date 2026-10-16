@@ -33,13 +33,15 @@ export function ProductMediaUploader() {
       const totalOrder = initialLength + index;
       const isPrimary = totalOrder === 0;
 
+      const assetId = item.mediaAssetId || (item as any).media_asset_id;
+
       setLocalPreviews((prev) => ({
         ...prev,
-        [item.mediaAssetId]: item.previewUrl,
+        [assetId]: item.previewUrl,
       }));
 
       append({
-        media_asset_id: item.mediaAssetId,
+        media_asset_id: assetId,
         alt_text: item.file.name.split(".")[0] || "Product image",
         sort_order: totalOrder,
         is_primary: isPrimary,
@@ -62,7 +64,7 @@ export function ProductMediaUploader() {
         <div>
           <h2 className="text-base font-semibold text-slate-900 font-serif flex items-center gap-2">
             Media Studio & Gallery
-            <span className="text-[10px] font-sans uppercase bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-sans">
+            <span className="text-[10px] uppercase bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-sans">
               {fields.length} {fields.length === 1 ? "Asset" : "Assets"}
             </span>
           </h2>
@@ -102,7 +104,8 @@ export function ProductMediaUploader() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {fields.map((field, index) => {
               const isPrimary = watch(`media.${index}.is_primary`);
-              const preview = localPreviews[field.media_asset_id];
+              const preview =
+                localPreviews[field.media_asset_id] || (field as any).url;
 
               return (
                 <div

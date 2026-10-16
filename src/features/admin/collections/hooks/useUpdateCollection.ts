@@ -3,9 +3,9 @@ import {
     updateCollection,
     UpdateCollectionPayload,
 } from "../api/updateCollection";
-import { COLLECTIONS_QUERY_KEY } from "./useCollections";
 import { toast } from "@/features/common/ui/toast/toastStore";
 import { ApiError } from "@/lib/errors/ApiError";
+import { collectionKeys } from "./keys";
 
 export function useUpdateCollection(id: string) {
     const queryClient = useQueryClient();
@@ -14,9 +14,8 @@ export function useUpdateCollection(id: string) {
         mutationFn: (payload: UpdateCollectionPayload) =>
             updateCollection(id, payload),
         onSuccess: (updatedCollection) => {
-            // Invalidate collections list queries to keep tables/lists up to date
             queryClient.invalidateQueries({
-                queryKey: COLLECTIONS_QUERY_KEY,
+                queryKey: collectionKeys.all,
                 exact: false,
             });
 

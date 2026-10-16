@@ -11,7 +11,6 @@ export default function CreateCollectionPage() {
           brand_id: "",
           name: "",
           description: "",
-          cover_media_url: "",
           status: "DRAFT",
         }}
       />

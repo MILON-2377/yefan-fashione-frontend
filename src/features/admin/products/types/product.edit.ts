@@ -121,7 +121,6 @@ export interface Product {
 export interface CreateProductPayload {
   name: string;
   description?: string;
-  brand_id: string;
   collection_id: string;
   category_id: string;
   status?: ProductStatus;

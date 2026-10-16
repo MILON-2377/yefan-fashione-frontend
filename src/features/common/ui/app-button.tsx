@@ -41,6 +41,7 @@ export const AppButton = React.forwardRef<HTMLButtonElement, AppButtonProps>(
         {!isLoading && rightIcon && (
           <span className="ml-2 inline-flex shrink-0 items-center">{rightIcon}</span>
         )}
+
       </Button>
     );
   }

@@ -64,7 +64,6 @@ export const customizationSchema = z.object({
 });
 
 export const createProductSchema = z.object({
-  brand_id: z.string().uuid("Please select a brand"),
   collection_id: z.string().uuid("Please select a collection"),
   product_code: z.string().optional(),
   category_id: z.string().uuid("Please select a category"),

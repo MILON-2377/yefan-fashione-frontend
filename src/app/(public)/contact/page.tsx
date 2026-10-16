@@ -11,40 +11,47 @@ export default function ContactPage() {
   const content = dict.contactPage;
 
   return (
-    <div className="bg-white text-slate-900 py-12 lg:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+    <div className="bg-[#FAF8F4] text-[#211F1C] py-14 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
         {/* Page Header */}
-        <div className="max-w-3xl space-y-4 mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider">
-            <Sparkles className="w-4 h-4 text-blue-600" />
+        <div className="mb-12 border-b border-[#E7E1D9] pb-8 sm:mb-14 sm:pb-10">
+          <div className="mb-5 inline-flex items-center gap-2 border border-[#D8C9B8] bg-[#F0ECE6] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#51463B] sm:text-xs">
+            <Sparkles className="h-4 w-4" />
             <span>{content.badge}</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+          <h1 className="max-w-4xl font-serif text-3xl font-medium leading-tight tracking-tight text-[#211F1C] sm:text-4xl lg:text-5xl">
             {content.heading}
           </h1>
 
-          <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
+          <p className="mt-5 max-w-2xl text-sm leading-7 text-[#625D57] sm:text-base sm:leading-8">
             {content.subheading}
           </p>
         </div>
 
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-7">
+        {/* Inquiry Form & Factory Information */}
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+          <div className="min-w-0 lg:col-span-7">
             <Suspense
               fallback={
-                <div className="flex items-center justify-center py-20 bg-slate-50 rounded-2xl border border-slate-100">
-                  <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+                <div
+                  className="flex min-h-64 items-center justify-center border border-[#E7E1D9] bg-white"
+                  aria-label="Loading inquiry form"
+                  role="status"
+                >
+                  <Loader2 className="h-6 w-6 animate-spin text-[#9D8974]" />
                 </div>
               }
             >
               <InquiryFormSection />
             </Suspense>
           </div>
-          <div className="lg:col-span-5">
-            <FactoryInfoSidebar />
-          </div>
+
+          <aside className="min-w-0 lg:col-span-5">
+            <div className="lg:sticky lg:top-8">
+              <FactoryInfoSidebar />
+            </div>
+          </aside>
         </div>
       </div>
     </div>

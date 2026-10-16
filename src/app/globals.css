@@ -5,24 +5,41 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  /* Main brand colors */
+  --background: #faf8f4;
+  --foreground: #211f1c;
+
+  /* Cards and popovers */
+  --card: #ffffff;
+  --card-foreground: #211f1c;
+  --popover: #ffffff;
+  --popover-foreground: #211f1c;
+
+  /* Primary buttons */
+  --primary: #211f1c;
+  --primary-foreground: #ffffff;
+
+  /* Secondary elements */
+  --secondary: #f0ece6;
+  --secondary-foreground: #211f1c;
+
+  /* Muted elements and descriptions */
+  --muted: #f0ece6;
+  --muted-foreground: #625d57;
+
+  /* Brand accent */
+  --accent: #e9e0d5;
+  --accent-foreground: #211f1c;
+
+  /* Validation */
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+
+  /* Borders and inputs */
+  --border: #e7e1d9;
+  --input: #e7e1d9;
+  --ring: #9d8974;
+
+  /* Component shape */
   --radius: 0.625rem;
 }
 

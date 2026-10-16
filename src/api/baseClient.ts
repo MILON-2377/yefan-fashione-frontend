@@ -5,7 +5,7 @@ import {
 
 
 const BASE_URL =
-    process.env.NEXT_PUBLIC_API_BASE_URL
+    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/v1"
 
 
 export interface ApiFetchOptions extends RequestInit {
@@ -25,8 +25,6 @@ let refreshPromise: Promise<void> | null = null;
 
 
 async function refreshAccessToken(): Promise<void> {
-
-    console.count("[AUTH] Refresh request started");
 
     const response = await fetch(
         `${BASE_URL}/auth/refresh`,
@@ -50,15 +48,6 @@ async function refreshAccessToken(): Promise<void> {
         catch {
             data = null;
         }
-
-
-        console.error(
-            "Refresh failed:",
-            {
-                status: response.status,
-                data,
-            }
-        );
 
 
         throw new Error(
@@ -431,12 +420,6 @@ export async function baseFetch<T>(
                             ? responseData
                             : undefined,
                 };
-
-        console.error("API Error intercepted:", {
-            url,
-            status: response.status,
-            errorPayload,
-        });
 
         throw new ApiError(
             response.status,

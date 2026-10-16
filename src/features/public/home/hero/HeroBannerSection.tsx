@@ -47,7 +47,7 @@ export function HeroBannerSection({ initialBanners }: HeroBannerSectionProps) {
   }
 
   return (
-    <section className="top-10 relative w-full z-0 overflow-hidden border-b border-slate-200">
+    <section className="top-10 relative w-full z-0 overflow-hidden bg-slate-950 border-b border-slate-800">
       {banners.map((banner, idx) => (
         <HeroSlide
           key={banner.id}

@@ -20,7 +20,7 @@ export default function EditBrandPage({ params }: EditBrandPageProps) {
 
   if (isLoading) {
     return (
-      <div className="min-h-[400px] flex flex-col items-center justify-center space-y-3 bg-white rounded-xl border border-slate-200 shadow-sm max-w-4xl mx-auto my-8">
+      <div className="min-h-100 flex flex-col items-center justify-center space-y-3 bg-white rounded-xl border border-slate-200 shadow-sm max-w-4xl mx-auto my-8">
         <Loader2 className="w-8 h-8 animate-spin text-slate-600" />
         <p className="text-xs font-mono text-slate-500">
           Loading brand details...

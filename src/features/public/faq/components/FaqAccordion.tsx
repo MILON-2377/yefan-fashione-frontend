@@ -15,15 +15,17 @@ export function FaqAccordion() {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-        <div className="flex items-center gap-2">
-          <HelpCircle className="w-5 h-5 text-blue-600" />
-          <h3 className="text-xl font-bold text-slate-900 tracking-tight">
+    <div className="space-y-5">
+      <div className="flex items-center justify-between gap-4 border-b border-[#D8C9B8] pb-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center border border-[#D8C9B8] bg-[#F0ECE6] text-[#9D8974]">
+            <HelpCircle className="h-4 w-4" />
+          </div>
+          <h3 className="font-serif text-xl font-normal tracking-tight text-[#211F1C] sm:text-2xl">
             {content.title}
           </h3>
         </div>
-        <span className="text-xs font-semibold text-slate-500">
+        <span className="shrink-0 text-[9px] font-medium uppercase tracking-[0.14em] text-[#817970] sm:text-[10px]">
           {content.items.length} {content.qaCountSuffix}
         </span>
       </div>
@@ -41,41 +43,44 @@ export function FaqAccordion() {
             return (
               <div
                 key={item.id}
-                className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+                className={`overflow-hidden border transition-all duration-300 ${
                   isOpen
-                    ? "bg-blue-50/40 border-blue-300 shadow-xs"
-                    : "bg-slate-50 border-slate-200 hover:border-slate-300"
+                    ? "border-[#D8C9B8] bg-[#F0ECE6]"
+                    : "border-[#E7E1D9] bg-white hover:border-[#D8C9B8]"
                 }`}
               >
                 {/* Question Header */}
                 <button
                   onClick={() => toggleFAQ(item.id)}
-                  className="w-full p-4 sm:p-5 text-left flex items-start justify-between gap-4 focus:outline-none"
+                  aria-expanded={isOpen}
+                  className="flex w-full items-start justify-between gap-4 p-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#9D8974] sm:p-5"
                 >
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
+                  <div className="min-w-0 space-y-2">
+                    <span className="block text-[9px] font-medium uppercase tracking-[0.18em] text-[#9D8974]">
                       {item.category}
                     </span>
-                    <h4 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
+                    <h4 className="text-sm font-medium leading-6 text-[#211F1C] sm:text-base">
                       {item.question}
                     </h4>
                   </div>
 
                   <div
-                    className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-transform duration-200 ${
+                    className={`mt-1 flex h-7 w-7 shrink-0 items-center justify-center border transition-all duration-300 ${
                       isOpen
-                        ? "bg-blue-600 text-white rotate-180"
-                        : "bg-white text-slate-400 border border-slate-200"
+                        ? "rotate-180 border-[#211F1C] bg-[#211F1C] text-white"
+                        : "border-[#E7E1D9] bg-[#FAF8F4] text-[#817970]"
                     }`}
                   >
-                    <ChevronDown className="w-4 h-4" />
+                    <ChevronDown className="h-4 w-4" />
                   </div>
                 </button>
 
                 {/* Answer Content */}
                 {isOpen && (
-                  <div className="px-4 sm:px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-blue-100/80 mt-1">
-                    {item.answer}
+                  <div className="mx-4 border-t border-[#D8C9B8] sm:mx-5">
+                    <div className="py-4 text-xs leading-7 text-[#625D57] sm:py-5 sm:text-sm sm:leading-7">
+                      {item.answer}
+                    </div>
                   </div>
                 )}
               </div>
