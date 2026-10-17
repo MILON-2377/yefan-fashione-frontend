@@ -1,8 +1,20 @@
 export interface LoginCredentials {
     email: string;
     password: string;
-    device_name: string;
 }
+
+
+export interface LoginChallengeResponse {
+    challenge_id: string;
+    message: string;
+    expires_in: number;
+}
+
+export interface VerifyLoginCodePayload {
+    challenge_id: string;
+    code: string;
+}
+
 
 export interface UserProfile {
     id: string;

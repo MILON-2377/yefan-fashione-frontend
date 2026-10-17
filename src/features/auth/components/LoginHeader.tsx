@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { Sparkles, ShieldCheck, Globe2, PhoneCall } from "lucide-react";
+import { Sparkles, ShieldCheck, Globe2 } from "lucide-react";
 
 export function LoginHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[#E7E1D9] bg-[#FAF8F4]/95 backdrop-blur-md">
-      <div className="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-19 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         {/* Brand & Admin Workspace Identity */}
         <div className="flex min-w-0 shrink-0 items-center gap-3">
           <Link
@@ -40,14 +40,14 @@ export function LoginHeader() {
             <span>Restricted Access</span>
           </div>
 
-          <a
+          {/* <a
             href="mailto:wholesale@yifan-atelier.com"
             className="inline-flex items-center gap-2 border border-[#D8C9B8] bg-white px-3 py-2 text-xs font-medium text-[#51463B] transition-colors duration-200 hover:border-[#9D8974] hover:bg-[#F0ECE6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9D8974] focus-visible:ring-offset-2 sm:px-4"
           >
             <PhoneCall className="h-3.5 w-3.5 shrink-0 text-[#9D8974]" />
             <span className="hidden sm:inline">Admin Support</span>
             <span className="sm:hidden">Support</span>
-          </a>
+          </a> */}
         </div>
       </div>
     </header>

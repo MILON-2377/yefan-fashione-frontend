@@ -1,23 +1,10 @@
-
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 import { login } from "../api/login";
-import type { LoginCredentials } from "../types";
+import type { LoginCredentials, LoginChallengeResponse } from "../types";
 import { ApiError } from "@/lib/errors/ApiError";
 
 export function useLogin() {
-  const queryClient = useQueryClient();
-  const router = useRouter();
-
-  return useMutation<void, ApiError, LoginCredentials>({
+  return useMutation<LoginChallengeResponse, ApiError, LoginCredentials>({
     mutationFn: login,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ["authenticated-user"],
-      });
-
-      router.replace("/admin");
-      router.refresh();
-    },
   });
 }

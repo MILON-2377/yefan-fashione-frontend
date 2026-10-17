@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ShieldCheck, Sparkles } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
 export function LoginEditorialSidebar() {
   return (
     <div className="relative hidden overflow-hidden border border-[#51463B] bg-[#211F1C] lg:col-span-5 lg:block xl:col-span-6">
       <Image
-        src="https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=1200&q=80"
+        src="/b2.png"
         alt="Elegant haute couture evening gown"
         fill
         priority
@@ -15,7 +15,7 @@ export function LoginEditorialSidebar() {
       />
 
       {/* Editorial Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#211F1C]/95 via-[#211F1C]/40 to-[#211F1C]/20" />
+      <div className="absolute inset-0 bg-linear-to-t from-[#211F1C]/95 via-[#211F1C]/40 to-[#211F1C]/20" />
 
       <div className="absolute inset-0 z-10 flex flex-col justify-between p-10 text-white xl:p-14">
         {/* Brand Identity */}

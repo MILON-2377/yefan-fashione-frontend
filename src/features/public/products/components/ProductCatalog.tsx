@@ -3,15 +3,23 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Sparkles, Search, FileText, ArrowUpRight, SlidersHorizontal, ArrowRight } from "lucide-react";
+import {
+  Sparkles,
+  Search,
+  FileText,
+  ArrowUpRight,
+  SlidersHorizontal,
+  ArrowRight,
+} from "lucide-react";
+
 import { useCatalogProducts } from "@/features/public/products/hooks/useCatalogProducts";
 import { ProductCard } from "@/features/public/products/components/ProductCard";
 import { DesktopFilter } from "@/features/public/products/components/DesktopFilter";
 import { MobileFilter } from "@/features/public/products/components/MobileFilter";
 import { usePublicCategories } from "@/features/public/categories/hooks/usePublicCategories";
+import { usePublicBrands } from "@/features/public/brands/hooks/usePublicBrands";
 import { AppButton } from "@/features/common/ui/AppButton";
 import { useLanguage } from "@/context/LanguageContext";
-import { usePublicBrands } from "@/features/public/brands/hooks/usePublicBrands";
 
 export default function ProductsCatalogContent() {
   const { dict } = useLanguage();
@@ -20,86 +28,85 @@ export default function ProductsCatalogContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Dynamic Public Brands Hook
+  const [searchQuery, setSearchQuery] = useState("");
+
   const { data: brandsResponse } = usePublicBrands();
-  const fetchedBrands = brandsResponse?.items ?? [];
+  const brands = brandsResponse?.items ?? [];
 
-  // Construct Brand Tabs (Default "All" + API Brands)
-  const brandTabs = [
-    { id: "all", name: content.brandTabs?.all || "All Brands & Lines" },
-    ...fetchedBrands,
-  ];
-
-  // Dynamic Public Categories Hook
   const { data: categoriesData } = usePublicCategories();
   const categories = categoriesData?.items ?? [];
 
-  // URL State Management
-  const activeBrand = searchParams.get("brand") || "all";
-  const activeCategory = searchParams.get("category") || "";
-  const activeCollection = searchParams.get("collection") || "";
+  // Read filter state directly from the URL so browser back/forward
+  // navigation and shared product URLs stay synchronized.
+  const selectedBrand =
+    searchParams.get("brand_id") || searchParams.get("brand") || "";
 
-  const [selectedBrand, setSelectedBrand] = useState<string>(
-    activeBrand !== "all" ? activeBrand : "",
-  );
-  const [selectedCategory, setSelectedCategory] =
-    useState<string>(activeCategory);
-  const [selectedCollection, setSelectedCollection] =
-    useState<string>(activeCollection);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const selectedCategory =
+    searchParams.get("category_id") || searchParams.get("category") || "";
 
-  // Live Products Query Hook (Includes dynamic brand_id filtering)
+  const selectedCollection =
+    searchParams.get("collection_id") || searchParams.get("collection") || "";
+
+  const brandTabs = [
+    {
+      id: "all",
+      name: content.brandTabs?.all || "All Brands & Lines",
+    },
+    ...brands,
+  ];
+
   const {
     data: productsData,
     isLoading,
     isError,
   } = useCatalogProducts({
     category_id: selectedCategory || undefined,
-    collection_id: selectedCollection || undefined, // <-- Added collection_id
+    collection_id: selectedCollection || undefined,
     brand_id: selectedBrand || undefined,
-    search: searchQuery || undefined,
+    search: searchQuery.trim() || undefined,
     limit: 24,
   });
 
   const products = productsData?.items ?? [];
 
   const activeFilterCount =
-    (selectedCategory ? 1 : 0) +
-    (selectedCollection ? 1 : 0) +
-    (selectedBrand ? 1 : 0);
+    Number(Boolean(selectedBrand)) +
+    Number(Boolean(selectedCategory)) +
+    Number(Boolean(selectedCollection));
 
-  // Brand Pill Tab Change Handler
-  const handleBrandTabChange = (brandId: string) => {
+  // Update a single URL parameter without discarding other filters.
+  const updateFilterParam = (keys: string[], value: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    if (brandId === "all") {
-      params.delete("brand");
-      setSelectedBrand("");
-    } else {
-      params.set("brand", brandId);
-      setSelectedBrand(brandId);
+
+    for (const key of keys) {
+      params.delete(key);
     }
-    router.push(`/products?${params.toString()}`);
+
+    if (value) {
+      params.set(keys[0], value);
+    }
+
+    const query = params.toString();
+    router.push(query ? `/products?${query}` : "/products", {
+      scroll: false,
+    });
   };
 
-  // Reset Filters Handler
-  const handleResetFilters = () => {
-    setSelectedBrand("");
-    setSelectedCategory("");
-    setSelectedCollection("");
-    setSearchQuery("");
-    const params = new URLSearchParams();
-    router.push(`/products?${params.toString()}`);
+  const handleBrandTabChange = (brandId: string) => {
+    updateFilterParam(["brand_id", "brand"], brandId === "all" ? "" : brandId);
+  };
+
+  const handleCategoryChange = (categoryId: string) => {
+    updateFilterParam(["category_id", "category"], categoryId);
   };
 
   const handleCollectionChange = (collectionId: string) => {
-    setSelectedCollection(collectionId);
-    const params = new URLSearchParams(searchParams.toString());
-    if (collectionId) {
-      params.set("collection", collectionId);
-    } else {
-      params.delete("collection");
-    }
-    router.push(`/products?${params.toString()}`, { scroll: false }); // <-- Added scroll: false
+    updateFilterParam(["collection_id", "collection"], collectionId);
+  };
+
+  const handleResetFilters = () => {
+    setSearchQuery("");
+    router.push("/products", { scroll: false });
   };
 
   return (
@@ -159,6 +166,7 @@ export default function ProductsCatalogContent() {
                   onClick={() => handleBrandTabChange(tab.id)}
                   variant="secondary"
                   size="sm"
+                  aria-pressed={isActive}
                   className={`shrink-0 rounded-full border px-5 py-2.5 text-xs font-medium transition-all duration-300 ${
                     isActive
                       ? "border-[#211F1C] bg-[#211F1C] text-white hover:bg-[#51463B] hover:text-white"
@@ -179,10 +187,11 @@ export default function ProductsCatalogContent() {
               <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9D8974]" />
 
               <input
-                type="text"
+                type="search"
                 placeholder={content.searchPlaceholder}
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                aria-label={content.searchPlaceholder}
                 className="h-12 w-full rounded-lg border border-transparent bg-[#FAF8F4] pl-11 pr-4 text-sm text-[#211F1C] outline-none transition-all placeholder:text-[#9D8974] focus:border-[#D8C9B8] focus:bg-white"
               />
             </div>
@@ -191,7 +200,7 @@ export default function ProductsCatalogContent() {
               <MobileFilter
                 categories={categories}
                 selectedCategory={selectedCategory}
-                onSelectCategory={setSelectedCategory}
+                onSelectCategory={handleCategoryChange}
                 selectedCollection={selectedCollection}
                 onSelectCollection={handleCollectionChange}
                 onReset={handleResetFilters}
@@ -218,7 +227,7 @@ export default function ProductsCatalogContent() {
               <DesktopFilter
                 categories={categories}
                 selectedCategory={selectedCategory}
-                onSelectCategory={setSelectedCategory}
+                onSelectCategory={handleCategoryChange}
                 selectedCollection={selectedCollection}
                 onSelectCollection={handleCollectionChange}
                 onReset={handleResetFilters}
@@ -233,6 +242,7 @@ export default function ProductsCatalogContent() {
                 <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#9D8974]">
                   The Collection
                 </p>
+
                 <h2 className="mt-2 font-serif text-2xl font-normal tracking-tight sm:text-3xl">
                   {content.heading}
                 </h2>
@@ -245,15 +255,39 @@ export default function ProductsCatalogContent() {
 
             {isLoading ? (
               <div className="grid grid-cols-1 gap-x-5 gap-y-8 sm:grid-cols-2 xl:grid-cols-3">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="aspect-3/4 rounded-lg bg-[#F0ECE6]" />
+                {[1, 2, 3, 4, 5, 6].map((item) => (
+                  <div key={item} className="animate-pulse">
+                    <div className="aspect-[3/4] rounded-lg bg-[#F0ECE6]" />
                     <div className="mt-4 h-3 w-2/3 rounded bg-[#F0ECE6]" />
                     <div className="mt-3 h-3 w-1/2 rounded bg-[#F0ECE6]" />
                   </div>
                 ))}
               </div>
-            ) : isError || products.length === 0 ? (
+            ) : isError ? (
+              <div className="flex min-h-80 flex-col items-center justify-center rounded-xl border border-dashed border-[#D8C9B8] bg-white px-6 py-12 text-center">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#FAF8F4]">
+                  <Search className="h-5 w-5 text-[#9D8974]" />
+                </div>
+
+                <h3 className="mt-5 font-serif text-2xl font-normal text-[#211F1C]">
+                  Unable to load products
+                </h3>
+
+                <p className="mt-2 max-w-sm text-sm leading-6 text-[#625D57]">
+                  Something went wrong while loading the catalog. Please try
+                  again.
+                </p>
+
+                <AppButton
+                  type="button"
+                  variant="secondary"
+                  onClick={handleResetFilters}
+                  className="mt-6 rounded-full border border-[#D8C9B8] bg-transparent px-5 text-xs font-medium text-[#51463B] hover:bg-[#F0ECE6]"
+                >
+                  {content.clearFiltersBtn}
+                </AppButton>
+              </div>
+            ) : products.length === 0 ? (
               <div className="flex min-h-80 flex-col items-center justify-center rounded-xl border border-dashed border-[#D8C9B8] bg-white px-6 py-12 text-center">
                 <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#FAF8F4]">
                   <Search className="h-5 w-5 text-[#9D8974]" />

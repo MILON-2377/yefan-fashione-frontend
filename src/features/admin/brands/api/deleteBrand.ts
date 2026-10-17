@@ -5,7 +5,6 @@ export interface DeleteBrandResponse {
 }
 
 export async function deleteBrand(brand_id: string): Promise<DeleteBrandResponse> {
-    console.log({brand_id})
     return adminFetch<DeleteBrandResponse>(`/brands/${brand_id}`, {
         method: 'DELETE',
     });

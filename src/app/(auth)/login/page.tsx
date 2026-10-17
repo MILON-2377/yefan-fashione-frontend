@@ -16,7 +16,7 @@ export default function LoginPage() {
       {/* Main Split View Layout */}
       <main className="mx-auto my-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-stretch gap-6 p-4 sm:gap-8 sm:p-6 lg:grid-cols-12 lg:p-8">
         {/* Left Column: Fashion Editorial */}
-        <div className="hidden min-h-[580px] overflow-hidden border border-[#E7E1D9] lg:col-span-5 lg:block xl:col-span-6">
+        <div className="hidden min-h-145 overflow-hidden border border-[#E7E1D9] lg:col-span-5 lg:block xl:col-span-6">
           <LoginEditorialSidebar />
         </div>
 
